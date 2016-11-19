@@ -1,0 +1,72 @@
+every exam must be associated with a user or a "prospect"
+
+application users will not be added as wordpress users
+
+every exam can have a maximum of 10 questions
+
+user must sign in prior to listening to the presentation
+
+the sign in information is used to match a user and their performance metrics
+
+ADMIN INTERFACE:
+(study "hotel booking" plugin)
+Adding a post type for the plugin
+a list of names of people who have taken assessments
+a list of all available assessments
+a list associating users with assessments and metrics
+
+
+required objects/attribute:
+  user
+  exam
+  questions
+  metrics
+ALL EXAM ATTRIBUTES CAN BE HANDLED BY THE CUSTOM POST TYPE EXAM
+
+ALL USER ATTRIBUTES WILL BE HANDLED BY CUSTOM POST 'USER'
+
+EXAM:
+  - title
+  - questions
+  - category
+
+USER:
+  - first name
+  - last name
+  - exam name
+  - exam date
+  - exam score
+
+QUESTIONS
+HOW DO WE WRITE CUSTOM FIELDS?
+HOW DO WE ADD A CATEGORIES FIELD TO A CUSTOM POST TYPE? 'taxonomies' => 'category'
+HOW DO WE LOAD SQL SCRIPTS IN WP/PHP?
+HOW DO WE ACCESS CUSTOM FIELD DATA?
+HOW DO RELATE USERS TO A SPECIFIC EXAM?
+
+BASIC PLUGIN FUNCTIONS:
+  manage assessments
+  manage users 
+
+
+OBJECT ATTRIBUTES:
+
+  Exam:
+    - title
+    - questions
+
+
+USER EXPERIENCE/WORKFLOW
+  1. admin creates a new user object
+  2. enters basic user info and assigns a username and password
+  3. input are supplied on the front end for username and password
+  4. user provides access credentials.  If correct the first slide appears. if not the user is prompted accordingly.
+  5. user takes the exam
+  6. after the exam is complete the following information is saved to database and is viewable in the admin
+        - date
+        - grade
+        - firstname and lastname
+        - username
+        - exam name
+
+HOW WILL WE KNOW WHEN A USER HAS TAKEN A TEST

@@ -1,0 +1,56 @@
+/*============================*/
+/*  */
+/*============================*/
+admin creds:
+u: admin
+p: sQEq1i9rwp01rzU$sV
+/*============================*/
+
+/*============================*/
+/*  */
+/*============================*/
+site test creds:
+*** database
+    u: elearning072216
+    p: -rV%D-lo@,?.
+*** admin
+    u: els-admin
+    p: voU^z@kPPwn8&jlyC& => (bfca1e03d917d600651868cbe96bf516)
+/*============================*/
+
+ns_user-settings
+libraryContent=browse&editor=html
+/*============================*/
+/*  LIVE SITE CPANEL*/
+/*============================*/
+u: posperous2016
+p: mYbr0tH3r@nd1
+
+/*============================*/
+/*  LIVE SITE DATABASE */
+/*============================*/
+u: elsokjl
+p: mYbr0tH3r@nd1
+
+/*============================*/
+/*  LIVE SITE WORDPRESS */
+/*============================*/
+u: prosperous2016
+p: mYbr0tH3r@nd1
+
+
+/*============================*/
+/*  LIVE SITE WEBMAIL */
+/*============================*/
+u: prosperous2016
+p: mYbr0tH3r@nd1
+
+u: okinsey@elearningsolution.tech
+p: 77U0nwHRP0!o
+
+
+/*============================*/
+/*  LIVE SITE godaddy*/
+/*============================*/
+u: 59819210
+p: Website45
