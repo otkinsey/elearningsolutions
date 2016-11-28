@@ -54,7 +54,18 @@ add_action('wp_ajax_nopriv_complete', 'test');
 function test(){
 
   $postVar = $_POST['complete'];
-  
+
   var_dump($postVar);
   return $postVar;
 }
+
+/*function login_styles(){
+  ?>
+    <style info="test">
+    .login h1 a {
+      background-image: url("<? echo get_stylesheet_directory_uri(); ?>/wp-content/uploads/2016/05/elearningsolutions.png");
+    }
+    </style>
+  <?
+}
+add_action('login_enqueue_scripts', 'login_styles');*/

@@ -38,14 +38,13 @@ get_header(); ?>
 					<!--video player-->
 					<div class="overflow_container" style="background: url('')">
 						<div class="video_container columns wow slideInRight" >
-
+							<h1>Welcome to the Elearning Solutions Demo Application!</h1>
 							<!-- begin: presentation content -->
 								<div class="signIn">
 									<div class="signIn-text">
 										<? $test = isset($_POST['complete']) ? $_POST['complete'] : NULL; ?>
 										<!-- <? var_dump(get_presentation('two')); ?> -->
-										<h1>Welcome to the Elearning Solutions Demo Application!</h1>
-										The following presentation demonstrates the functional and aesthetic features that are possible with a learning application from Elearning solutions.  The features of this application are fully customizable, and represent a small portion of the full range of functional, visual, and administrative features that can be provided. Please enter your username and password in the form below to begin.
+										<!-- The following presentation demonstrates the functional and aesthetic features that are possible with a learning application from Elearning solutions.  The features of this application are fully customizable, and represent a small portion of the full range of functional, visual, and administrative features that can be provided. Please enter your username and password in the form below to begin. -->
 									</div>
 									<form class="sign-in-form" action="" method="">
 										<h3>Sign in Here.</h3>

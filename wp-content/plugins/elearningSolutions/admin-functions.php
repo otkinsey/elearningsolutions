@@ -130,6 +130,220 @@ function get_multiple_choice_answers($post_id){
   }
 }
 
+
+
+/*******************************************************************************
+* SELECT FUNCTIONS
+*
+*******************************************************************************/
+  function get_els_post_ids(){
+    global $wpdb;
+    $str = "SELECT ID FROM e_posts where post_type ='exam-object'";
+    $query = $wpdb->get_results($str, ARRAY_A);
+    // echo ('admin-functions.php line 48 '); var_dump( $query);
+    return $query;
+  }
+  function get_els_exam_firstNames(){
+    global $wpdb;
+    $str = "SELECT * FROM e_els_scheduledExams ";
+    $query = $wpdb->get_results($str, OBJECT);
+    $result = array();
+    // var_dump($query);
+    foreach($query as $item){
+      $result[]=$item;
+    }
+    return $result;
+  }
+  function get_els_exam_firstName($id){
+    global $wpdb;
+    $str = "SELECT * FROM e_els_scheduledExams WHERE examID = '$id' ";
+    $query = $wpdb->get_results($str, OBJECT);
+    $result = array();
+    // var_dump($query);
+    foreach($query as $item){
+      $result[]=$item;
+    }
+    return $result;
+  }
+  function get_els_exam_testName($id){
+    global $wpdb;
+    $str = "SELECT post_title FROM e_posts WHERE ID = '$id' ";
+    $query = $wpdb->get_results($str, OBJECT);
+
+    return $query;
+  }
+/*******************************************************************************
+*
+*  DELETE FUNCTIONS
+*
+*******************************************************************************/
+
+function delete_schedule_assessment($id){
+  global $wpdb;
+  $str = "DELETE * from e_els_scheduledExams WHERE meta_id='$id'";
+  $query = $wpdb->delete('e_els_scheduledExams', array('meta_id'=>$id));
+  return $query;
+}
+/*******************************************************************************
+*
+*  ADMIN OUTPUT FUNCTIONS
+*
+*******************************************************************************/
+/*
+h = function() {
+  window.wpActiveEditor = j
+}
+*/
+add_meta_box('exam-object-editor', 'Add Slide to Presentation', 'add_presentation_slide', 'presentation', 'normal', 'high');
+function add_presentation_slide(){
+  $slideId = array('one','two','three','four','five','six','seven','eight','nine','ten');
+  $b=0;
+  for($a=1;$a<10;$a++){
+    echo "<label style='text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
+    wp_editor('', 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
+    echo "<div class='button' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
+    $b++;
+  }
+
+  // echo "<label style='text-transform:capitalize;font-weight:bold;'>Slide $slideId[1] </label>";
+  // wp_editor('', 'wpcf_slide_'.$slideId[1],array('textarea_name'=>'wpcf[slide-'.$slideId[1].']','editor_height'=>300));
+  // echo "<div class='button' onclick='addNewSlide(event)' id='slide-$slideId[1]' order='1'> new slide</div>";
+  ?>
+  <script>
+  /* GLOBAL VARIABLES */
+    var slideOrder;
+    function setAttributes(el, attrs){
+      for(key in attrs){
+        el.setAttribute(key, attrs[key]);
+      }
+    }
+    function addNewSlide(event){
+
+      var slideIndex = ['one','two','three','four','five','six','seven','eight','nine','ten'];
+      var slideId = event.target.getAttribute('id');
+      slideOrder = event.target.getAttribute('order');
+      slideOrder++;
+      var slideContainer = document.querySelector('#exam-object-editor');
+      // console.log('slide id: '+slideId+' and slide order: '+slideOrder);
+      /* --create WYSIWYG editor--  */
+      var newSlideLabel = document.createElement('label');
+      var labelText = document.createTextNode('Slide '+slideIndex[slideOrder-1]);
+      newSlideLabel.appendChild(labelText);
+      setAttributes( newSlideLabel, {"style":"text-transform:capitalize;font-weight:bold;"});
+      var newSlide = document.createElement('div');
+
+      setAttributes(newSlide, {'class':'inside'});
+      var innerWrap = document.createElement('div');
+      setAttributes(innerWrap, {"rel":"stylesheet",  "id":"editor-buttons-css", "href":"/wp-includes/css/editor.min.css?ver:4.5.2", "type":"text/css", "media":"all"});
+      var editorTools = document.createElement('div');
+      setAttributes(editorTools, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-editor-tools","class":"wp-editor-tools hide-if-no-js"});
+      var mediaButtonContainer = document.createElement('div');
+      setAttributes(mediaButtonContainer, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-media-buttons", "class":"wp-media-buttons"})
+      var mediaButton = document.createElement('button');
+      setAttributes( mediaButton, {"type":"button", "id":"insert-media-button", "class":"button insert-media add_media", "data-editor":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
+      var mediaButtonIcon = document.createElement('span');
+      setAttributes( mediaButtonIcon, {"class":"wp-media-buttons-icon"});
+      var mediaButtonIconText = document.createTextNode('Add Media');
+      mediaButton.appendChild(mediaButtonIconText);
+      mediaButton.appendChild(mediaButtonIcon);
+      var editorTabs = document.createElement('div');
+      setAttributes( editorTabs, {"class":"wp-editor-tabs"});
+      var visualButton = document.createElement('button');
+      setAttributes( visualButton, {"type":"button", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+"-tmce", "class":"wp-switch-editor switch-tmce", "data-wp-editor-id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
+      var visualButtonText = document.createTextNode('Visual');
+      visualButton.appendChild(visualButtonText);
+      var textButton = document.createElement('button');
+      setAttributes( textButton, {"type":"button", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+"-html", "class":"wp-switch-editor switch-html", "data-wp-editor-id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
+      var textButtonText = document.createTextNode('Text');
+      textButton.appendChild(textButtonText);
+      var editorContainer = document.createElement('div');
+      setAttributes( editorContainer, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-editor-container", "class":"wp-editor-container"});
+      var toolbar = document.createElement('div');
+      setAttributes( toolbar, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_toolbar", "class":"quicktags-toolbar"});
+      var strong = document.createElement('input');
+      setAttributes( strong, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_strong", "class":"ed_button button button-small", "aria-label":"Bold", "value":"b", "type":"button"});
+      var em = document.createElement('input');
+      setAttributes( em, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_em", "class":"ed_button button button-small", "aria-label":"italic", "value":"i", "type":"button"});
+      var link = document.createElement('input');
+      setAttributes( link, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_link", "class":"ed_button button button-small", "aria-label":"Insert link", "value":"link", "type":"button"});
+      var block = document.createElement('input');
+      setAttributes( block, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_block", "class":"ed_button button button-small", "aria-label":"Blockquote", "value":"b-quote", "type":"button"});
+      var del = document.createElement('input');
+      setAttributes( del, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_del", "class":"ed_button button button-small", "aria-label":"Deleted text (strikethrough)", "value":"del", "type":"button"});
+      var ins = document.createElement('input');
+      setAttributes( ins, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ins", "class":"ed_button button button-small", "aria-label":"Inserted text", "value":"ins", "type":"button"});
+      var img = document.createElement('input');
+      setAttributes( img, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_img", "class":"ed_button button button-small", "aria-label":"Insert image", "value":"img", "type":"button"});
+      var ul = document.createElement('input');
+      setAttributes( ul, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ul", "class":"ed_button button button-small", "aria-label":"Bulleted list", "value":"ul", "type":"button"});
+      var ol = document.createElement('input');
+      setAttributes( ol, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ol", "class":"ed_button button button-small", "aria-label":"Numbered list", "value":"ol", "type":"button"});
+      var li = document.createElement('input');
+      setAttributes( li, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_li", "class":"ed_button button button-small", "aria-label":"List item", "value":"li", "type":"button"});
+      var code = document.createElement('input');
+      setAttributes( code, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_code", "class":"ed_button button button-small", "aria-label":"Code", "value":"code", "type":"button"});
+      var more = document.createElement('input');
+      setAttributes( more, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_more", "class":"ed_button button button-small", "aria-label":"Insert Read More tag", "value":"more", "type":"button"});
+      var close = document.createElement('input');
+      setAttributes( close, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_close", "class":"ed_button button button-small", "aria-label":"Close all open tags", "value":"close tags", "type":"button"});
+      var editorArea = document.createElement('div');
+      setAttributes( editorArea, {"class":"wp-editor-area", "style":"height: 300px", "autocomplete":"off", "cols":"40", "name":"wpcf[slide-"+slideIndex[slideOrder-1]+"]", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
+      var newSlideButton = document.createElement('div');
+      setAttributes( newSlideButton, {"class":"button", "onclick":"addNewSlide(event)", "id":"slide-"+slideIndex[slideOrder-1], "order":slideOrder});
+      var newSlideButtonText = document.createTextNode('new slide');
+      newSlideButton.appendChild(newSlideButtonText);
+      /*--*/
+
+      //# Components of New Slide element
+      newSlide.appendChild(newSlideLabel);
+      newSlide.appendChild(innerWrap);
+      newSlide.appendChild(newSlideButton);
+
+      //# Componenets of innerWrap
+      innerWrap.appendChild(link);
+      innerWrap.appendChild(editorTools);
+      innerWrap.appendChild(editorContainer);
+      slideContainer.appendChild(newSlide);
+
+      //# Componenets of Editor Tools
+      editorTools.appendChild(mediaButtonContainer);
+      editorTools.appendChild(editorTabs);
+
+      //# Componenets of Media Button Container
+      mediaButtonContainer.appendChild(mediaButton);
+      mediaButtonContainer.appendChild(mediaButtonIcon)
+
+      //# Componenets of Editor Tabs
+      editorTabs.appendChild(visualButton);
+      editorTabs.appendChild(textButton);
+
+      //# Componenets of Editor Container
+      editorContainer.appendChild(toolbar);
+      editorContainer.appendChild(editorArea);
+      //# Componenets of Toolbar
+      toolbar.appendChild(strong);
+      toolbar.appendChild(em);
+      toolbar.appendChild(link);
+      toolbar.appendChild(block);
+      toolbar.appendChild(del);
+      toolbar.appendChild(ins);
+      toolbar.appendChild(img);
+      toolbar.appendChild(ul);
+      toolbar.appendChild(ol);
+      toolbar.appendChild(li);
+      toolbar.appendChild(code);
+      toolbar.appendChild(more);
+      toolbar.appendChild(close);
+
+    }
+  </script>
+  <?
+  // $presentationSlideIndex++;
+  // return $presentationSlideIndex;
+}
+
+
+
 # Multiple Option inputs: Create multiple choice inputs & save/retreive input
 add_meta_box('exam-question-options', 'Multipe Choice Options', 'multiple_choice_options', 'exam-object', 'normal', 'low');
 function multiple_choice_options(){
@@ -365,60 +579,6 @@ function exam_questions(){
   <?
 }
 
-
-/*******************************************************************************
-* SELECT FUNCTIONS
-*
-*******************************************************************************/
-  function get_els_post_ids(){
-    global $wpdb;
-    $str = "SELECT ID FROM e_posts where post_type ='exam-object'";
-    $query = $wpdb->get_results($str, ARRAY_A);
-    // echo ('admin-functions.php line 48 '); var_dump( $query);
-    return $query;
-  }
-  function get_els_exam_firstNames(){
-    global $wpdb;
-    $str = "SELECT * FROM e_els_scheduledExams ";
-    $query = $wpdb->get_results($str, OBJECT);
-    $result = array();
-    // var_dump($query);
-    foreach($query as $item){
-      $result[]=$item;
-    }
-    return $result;
-  }
-  function get_els_exam_firstName($id){
-    global $wpdb;
-    $str = "SELECT * FROM e_els_scheduledExams WHERE examID = '$id' ";
-    $query = $wpdb->get_results($str, OBJECT);
-    $result = array();
-    // var_dump($query);
-    foreach($query as $item){
-      $result[]=$item;
-    }
-    return $result;
-  }
-  function get_els_exam_testName($id){
-    global $wpdb;
-    $str = "SELECT post_title FROM e_posts WHERE ID = '$id' ";
-    $query = $wpdb->get_results($str, OBJECT);
-
-    return $query;
-  }
-/*******************************************************************************
-*
-*  DELETE FUNCTIONS
-*
-*******************************************************************************/
-
-function delete_schedule_assessment($id){
-  global $wpdb;
-  $str = "DELETE * from e_els_scheduledExams WHERE meta_id='$id'";
-  $query = $wpdb->delete('e_els_scheduledExams', array('meta_id'=>$id));
-  return $query;
-}
-
   function output_scheduled_exams(){
       global $wpdb;
       $str = 'SELECT post_title, ID FROM e_posts WHERE post_type="exam-object"';
@@ -605,7 +765,112 @@ function els_submenu() {
         register_activation_hook(__FILE__, 'elsMakeTables');
 
 /* Description: Create custom post fields for exam questions */
+/*******************************************************************************
+* LOGIN  STYLES
+*******************************************************************************/
+function login_styles(){
+  ?>
+    <style info="test2">
+    .login h1 a {
+    	background-image: url("http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/05/elearningsolutions.png") !important;
+    	background-size: 56px !important;
+    	width: auto;
+    	height: 56px !important;
+    	margin: 0 auto 10px !important;
+    }
+    .login h1::after {
+    	content: 'elearning solutions';
+    	display: block;
+    	color: #85cfb4;
+    	font-size: 20px;
+    }
+    .wp-core-ui .button-primary {
+    	background: #f15a2e !important;
+    	border-color: #f15a2e #F15A2E #F15A2E !important;
+    	-webkit-box-shadow: none !important;
+    	box-shadow: none !important;
+    	color: #fff;
+    	text-decoration: none !important;
+    	text-shadow: none !important;
+    }
+    input[type="text"]:focus, input[type="search"]:focus, input[type="radio"]:focus, input[type="tel"]:focus,
+    input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input[type="password"]:focus,
+    input[type="checkbox"]:focus, input[type="color"]:focus, input[type="date"]:focus,
+    input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus,
+    input[type="month"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+    	border-color: #f15a2e !important;
+    	-webkit-box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
+    	box-shadow: 0 0 2px rgb(231, 144, 118) !important;
+    }
+    </style>
+  <?
+}
+add_action('login_enqueue_scripts', 'login_styles');
+/*******************************************************************************
+* ADMIN STYLES
+*******************************************************************************/
 
+function admin_styles(){
+  ?>
+    <style>
+    #wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon::before {
+      	content: '' !important;
+      	top: 2px;
+      	background: url("http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/elearningsolutions_white.png") 0px 0px/contain no-repeat;
+      	width: 30px;
+      	display: block;
+      	height: 100%;
+      }
+      .wp-core-ui .button-primary.focus, .wp-core-ui .button-primary.hover, .wp-core-ui .button-primary:focus, .wp-core-ui .button-primary:hover {
+        background: #f28565 !important;
+        border-color: #F15A2E !important;
+        color: #fff;
+      }
+      #adminmenu a {
+      	color: #60b797 !important;
+      	border-bottom: 1px solid rgba(0,0,0,.1) !important;
+      }
+      #adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap {
+      	width: 160px;
+      	background-color: #85cfb4 !important;
+      }
+      #adminmenu div.wp-menu-image::before {
+      	color: rgb(233, 137, 103)!important;
+      }
+      #wpadminbar {
+      	color: #fff !important;
+      	background: #3b9675 !important;
+      	border-bottom: 1px solid #3a7e65 !important;
+      }
+      #wpadminbar .ab-empty-item, #wpadminbar a.ab-item, #wpadminbar > #wp-toolbar span.ab-label, #wpadminbar > #wp-toolbar span.noticon {
+      	color: #fff !important;
+      }
+      #adminmenu li.menu-top:hover, #adminmenu li.opensub > a.menu-top, #adminmenu li > a.menu-top:focus {
+      	background-color: #de6138 !important;
+      	color: #fff !important;
+      }
+      #adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap {
+      	width: 160px;
+      	background-color: #f0e8e1 !important;
+      }
+      #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
+      	background: #d54e21 !important;
+      	color: #fff !important;
+      	font-weight: bold;
+      }
+      #adminmenu li a:focus div.wp-menu-image::before, #adminmenu li.opensub div.wp-menu-image::before, #adminmenu li:hover div.wp-menu-image::before {
+      	color: #fff !important;
+      }
+      #adminmenu .wp-submenu a:focus, #adminmenu .wp-submenu a:hover, #adminmenu a:hover, #adminmenu li.menu-top > a:focus {
+      	color: #fff !important;
+      }
+      #adminmenu .wp-has-current-submenu div.wp-menu-image::before {
+      	color: white !important;
+      }
+    </style>
+  <?
+}
+add_action('admin_enqueue_scripts', 'admin_styles');
 /*******************************************************************************
 * end of plugin
 *******************************************************************************/
