@@ -26,6 +26,12 @@ html, body {
 	top: 4px;
 	color: red;
 }
+.editor-object-container{
+	display: none;
+}
+.editor-object-container.visible-slide{
+	display: block;
+}
 .heading{
 	font-weight:bold;
 }

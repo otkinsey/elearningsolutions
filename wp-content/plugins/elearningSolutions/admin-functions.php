@@ -196,14 +196,26 @@ h = function() {
 */
 add_meta_box('exam-object-editor', 'Add Slide to Presentation', 'add_presentation_slide', 'presentation', 'normal', 'high');
 function add_presentation_slide(){
+  global $post;
+  //var_dump($post->ID);
   $slideId = array('one','two','three','four','five','six','seven','eight','nine','ten');
+  $slideContent = get_slides($post->ID);
   $b=0;
-  for($a=1;$a<10;$a++){
-    echo "<label style='text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
-    wp_editor('', 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
-    echo "<div class='button' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
-    $b++;
+  for($a=0;$a<10;$a++){
+    if($slideContent[$a]->meta_value){
+      echo "<div class='editor-object-container slide visible-slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
+      wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_value'=>'test','textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
+      echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div></div>";
+      $b++;
+    }
+    else{
+      echo "<div class='editor-object-container slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
+      wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_value'=>'test','textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
+      echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div></div>";
+      $b++;
+    }
   }
+
 
   // echo "<label style='text-transform:capitalize;font-weight:bold;'>Slide $slideId[1] </label>";
   // wp_editor('', 'wpcf_slide_'.$slideId[1],array('textarea_name'=>'wpcf[slide-'.$slideId[1].']','editor_height'=>300));
@@ -211,129 +223,28 @@ function add_presentation_slide(){
   ?>
   <script>
   /* GLOBAL VARIABLES */
-    var slideOrder;
+  var nextSlide;
+
+
     function setAttributes(el, attrs){
       for(key in attrs){
         el.setAttribute(key, attrs[key]);
       }
     }
-    function addNewSlide(event){
 
+    function addNewSlide(event){
+      var slideCount = document.getElementsByClassName('visible-slide').length;
+      var slides = document.getElementsByClassName('slide');
       var slideIndex = ['one','two','three','four','five','six','seven','eight','nine','ten'];
       var slideId = event.target.getAttribute('id');
       slideOrder = event.target.getAttribute('order');
       slideOrder++;
       var slideContainer = document.querySelector('#exam-object-editor');
-      // console.log('slide id: '+slideId+' and slide order: '+slideOrder);
-      /* --create WYSIWYG editor--  */
-      var newSlideLabel = document.createElement('label');
-      var labelText = document.createTextNode('Slide '+slideIndex[slideOrder-1]);
-      newSlideLabel.appendChild(labelText);
-      setAttributes( newSlideLabel, {"style":"text-transform:capitalize;font-weight:bold;"});
-      var newSlide = document.createElement('div');
+      nextSlide = slideCount;
+      console.log(nextSlide);
+      slides[slideCount].className += ' visible-slide';
 
-      setAttributes(newSlide, {'class':'inside'});
-      var innerWrap = document.createElement('div');
-      setAttributes(innerWrap, {"rel":"stylesheet",  "id":"editor-buttons-css", "href":"/wp-includes/css/editor.min.css?ver:4.5.2", "type":"text/css", "media":"all"});
-      var editorTools = document.createElement('div');
-      setAttributes(editorTools, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-editor-tools","class":"wp-editor-tools hide-if-no-js"});
-      var mediaButtonContainer = document.createElement('div');
-      setAttributes(mediaButtonContainer, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-media-buttons", "class":"wp-media-buttons"})
-      var mediaButton = document.createElement('button');
-      setAttributes( mediaButton, {"type":"button", "id":"insert-media-button", "class":"button insert-media add_media", "data-editor":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
-      var mediaButtonIcon = document.createElement('span');
-      setAttributes( mediaButtonIcon, {"class":"wp-media-buttons-icon"});
-      var mediaButtonIconText = document.createTextNode('Add Media');
-      mediaButton.appendChild(mediaButtonIconText);
-      mediaButton.appendChild(mediaButtonIcon);
-      var editorTabs = document.createElement('div');
-      setAttributes( editorTabs, {"class":"wp-editor-tabs"});
-      var visualButton = document.createElement('button');
-      setAttributes( visualButton, {"type":"button", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+"-tmce", "class":"wp-switch-editor switch-tmce", "data-wp-editor-id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
-      var visualButtonText = document.createTextNode('Visual');
-      visualButton.appendChild(visualButtonText);
-      var textButton = document.createElement('button');
-      setAttributes( textButton, {"type":"button", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+"-html", "class":"wp-switch-editor switch-html", "data-wp-editor-id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
-      var textButtonText = document.createTextNode('Text');
-      textButton.appendChild(textButtonText);
-      var editorContainer = document.createElement('div');
-      setAttributes( editorContainer, {"id":"wp-wpcf_slide_"+slideIndex[slideOrder-1]+"-editor-container", "class":"wp-editor-container"});
-      var toolbar = document.createElement('div');
-      setAttributes( toolbar, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_toolbar", "class":"quicktags-toolbar"});
-      var strong = document.createElement('input');
-      setAttributes( strong, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_strong", "class":"ed_button button button-small", "aria-label":"Bold", "value":"b", "type":"button"});
-      var em = document.createElement('input');
-      setAttributes( em, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_em", "class":"ed_button button button-small", "aria-label":"italic", "value":"i", "type":"button"});
-      var link = document.createElement('input');
-      setAttributes( link, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_link", "class":"ed_button button button-small", "aria-label":"Insert link", "value":"link", "type":"button"});
-      var block = document.createElement('input');
-      setAttributes( block, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_block", "class":"ed_button button button-small", "aria-label":"Blockquote", "value":"b-quote", "type":"button"});
-      var del = document.createElement('input');
-      setAttributes( del, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_del", "class":"ed_button button button-small", "aria-label":"Deleted text (strikethrough)", "value":"del", "type":"button"});
-      var ins = document.createElement('input');
-      setAttributes( ins, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ins", "class":"ed_button button button-small", "aria-label":"Inserted text", "value":"ins", "type":"button"});
-      var img = document.createElement('input');
-      setAttributes( img, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_img", "class":"ed_button button button-small", "aria-label":"Insert image", "value":"img", "type":"button"});
-      var ul = document.createElement('input');
-      setAttributes( ul, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ul", "class":"ed_button button button-small", "aria-label":"Bulleted list", "value":"ul", "type":"button"});
-      var ol = document.createElement('input');
-      setAttributes( ol, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_ol", "class":"ed_button button button-small", "aria-label":"Numbered list", "value":"ol", "type":"button"});
-      var li = document.createElement('input');
-      setAttributes( li, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_li", "class":"ed_button button button-small", "aria-label":"List item", "value":"li", "type":"button"});
-      var code = document.createElement('input');
-      setAttributes( code, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_code", "class":"ed_button button button-small", "aria-label":"Code", "value":"code", "type":"button"});
-      var more = document.createElement('input');
-      setAttributes( more, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_more", "class":"ed_button button button-small", "aria-label":"Insert Read More tag", "value":"more", "type":"button"});
-      var close = document.createElement('input');
-      setAttributes( close, {"id":"qt_wpcf_slide_"+slideIndex[slideOrder-1]+"_close", "class":"ed_button button button-small", "aria-label":"Close all open tags", "value":"close tags", "type":"button"});
-      var editorArea = document.createElement('div');
-      setAttributes( editorArea, {"class":"wp-editor-area", "style":"height: 300px", "autocomplete":"off", "cols":"40", "name":"wpcf[slide-"+slideIndex[slideOrder-1]+"]", "id":"wpcf_slide_"+slideIndex[slideOrder-1]+""});
-      var newSlideButton = document.createElement('div');
-      setAttributes( newSlideButton, {"class":"button", "onclick":"addNewSlide(event)", "id":"slide-"+slideIndex[slideOrder-1], "order":slideOrder});
-      var newSlideButtonText = document.createTextNode('new slide');
-      newSlideButton.appendChild(newSlideButtonText);
-      /*--*/
-
-      //# Components of New Slide element
-      newSlide.appendChild(newSlideLabel);
-      newSlide.appendChild(innerWrap);
-      newSlide.appendChild(newSlideButton);
-
-      //# Componenets of innerWrap
-      innerWrap.appendChild(link);
-      innerWrap.appendChild(editorTools);
-      innerWrap.appendChild(editorContainer);
-      slideContainer.appendChild(newSlide);
-
-      //# Componenets of Editor Tools
-      editorTools.appendChild(mediaButtonContainer);
-      editorTools.appendChild(editorTabs);
-
-      //# Componenets of Media Button Container
-      mediaButtonContainer.appendChild(mediaButton);
-      mediaButtonContainer.appendChild(mediaButtonIcon)
-
-      //# Componenets of Editor Tabs
-      editorTabs.appendChild(visualButton);
-      editorTabs.appendChild(textButton);
-
-      //# Componenets of Editor Container
-      editorContainer.appendChild(toolbar);
-      editorContainer.appendChild(editorArea);
-      //# Componenets of Toolbar
-      toolbar.appendChild(strong);
-      toolbar.appendChild(em);
-      toolbar.appendChild(link);
-      toolbar.appendChild(block);
-      toolbar.appendChild(del);
-      toolbar.appendChild(ins);
-      toolbar.appendChild(img);
-      toolbar.appendChild(ul);
-      toolbar.appendChild(ol);
-      toolbar.appendChild(li);
-      toolbar.appendChild(code);
-      toolbar.appendChild(more);
-      toolbar.appendChild(close);
+      nextSlide++;
 
     }
   </script>
