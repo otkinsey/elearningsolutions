@@ -6,11 +6,14 @@ get_header(); ?>
 
 
 <!---SECTION FIVE--->
-<audio class="audio_1" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_1.mp3"></audio>
-<audio class="audio_2" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_2.mp3"></audio>
-<audio class="audio_3" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_3.mp3"></audio>
-<audio class="audio_4" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_4.mp3"></audio>
 
+<!-- audio files -->
+<div id="audioFileContainer">
+	<!-- <audio class="audio_1" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_1.mp3"></audio>
+	<audio class="audio_2" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_2.mp3"></audio>
+	<audio class="audio_3" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_3.mp3"></audio>
+	<audio class="audio_4" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_4.mp3"></audio> -->
+</div>
 <section id="section_five" class="section_5">
 	<div class="overlay">
 		<div class="evalMessage correct">
@@ -24,7 +27,7 @@ get_header(); ?>
 		<div class="evalMessage complete">
 			<h1>Assessment Complete!</h1>
 			<p>Your Score is: <span class="score">100%</span></p>
-			<span class="button tryAgain">home</span>
+			<span class="button complete">home</span>
 		</div>
 	</div>
 	<video width="" height="" loop muted autoplay>
@@ -38,7 +41,7 @@ get_header(); ?>
 					<!--video player-->
 					<div class="overflow_container" style="background: url('')">
 						<div class="video_container columns wow slideInRight" >
-							<h1>Welcome to the Elearning Solutions Demo Application!</h1>
+							<h1 id="welcome">Welcome to the Elearning Solutions Demo Application!</h1>
 							<!-- begin: presentation content -->
 								<div class="signIn">
 									<div class="signIn-text">
@@ -123,7 +126,7 @@ get_header(); ?>
 								**  VIDEO PLAYER CONTROL BUTTONS:
 								**  these may be brought back at a later time
 								*************************************-->
-								<audio controls class="audio1">
+								<!-- <audio controls class="audio1">
 									<source src="http://localhost:8888/practice/eliteTrainingVideos/wp-content/themes/generic/assets/audio_files/audio_1.m4a" type="audio/mpeg">
 								</audio>
 								<audio controls class="audio2">
@@ -131,7 +134,7 @@ get_header(); ?>
 								</audio>
 								<audio controls class="audio3">
 									<source src="http://localhost:8888/practice/eliteTrainingVideos/wp-content/themes/generic/assets/audio_files/audio_3.m4a" type="audio/mpeg">
-								</audio>
+								</audio> -->
 								<div class="controls_container">
 									<span class="control close" id="close"></span>
 									<span class="control rwd" id="rwd"></span>

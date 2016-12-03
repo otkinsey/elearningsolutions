@@ -181,19 +181,24 @@ if($function == 'sign-in'){
           //  $_POST['response'] = "{\"examID\":\"".$signed_in[0]->examID."\",\"firstName\":\"".$signed_in[0]->firstName."\",\"lastName\":\"".$signed_in[0]->examID."\",\"username\":\"".$signed_in[0]->userName."\",\"examDate\":\"".$signed_in[0]->examDate."\",\"score\":\"NULL".$signed_in[0]->score."\",\"testName\":\"".$signed_in[0]->testName."\" }";
           // echo $signed_in;
 
-          $test           = get_exam_questions($signed_in[0]->testName);
-          $answerOptions  = get_multiple_choice_options($signed_in[0]->testName);
-          $examAnswers        = get_multiple_choice_answers($signed_in[0]->testName);
           $examName       = get_exam_name($signed_in[0]->testName);
           $examNameArray  = explode('-', $examName[0]->post_name);
           $presVar        = get_presentation($examNameArray[1]);
+          $test           = get_exam_questions($signed_in[0]->testName);
+          $audioFiles     = get_audio_files($presVar[0]->ID);
+          $answerOptions  = get_multiple_choice_options($signed_in[0]->testName);
+          $examAnswers    = get_multiple_choice_answers($signed_in[0]->testName);
           $presentation   = get_slides($presVar[0]->ID);
-          $answers  = array();
+          $answers        = array();
           $options        = array();
           $questions      = array();
           $slides         = array();
+          $files          = array();
             $a=1;$b=0;
 
+          foreach($audioFiles as $file){
+            $files[]= $file;
+          }
           foreach($examAnswers as $answer){
             $answers[]= $answer;
           }
@@ -207,11 +212,17 @@ if($function == 'sign-in'){
           foreach($presentation as $slide){
             $slides[] = $slide;
           }
-          //return '$signed_in';
-          // var_dump($questions);
-          // echo json_encode($examNameArray[1]);
-          $dataObj = array('userInfo'=>$signed_in,'questions'=>$questions, 'answers'=>$answers, 'options'=>$options, 'slides'=>$slides );
+
+          $dataObj =  array(  'userInfo'=>$signed_in,
+                              'questions'=>$questions,
+                              'answers'=>$answers,
+                              'options'=>$options,
+                              'slides'=>$slides,
+                              'audioFiles'=>$files
+                            );
+
           echo json_encode($dataObj);
+          // echo 'presention ID:  '.$presVar[0]->ID;
           die();
       }
     }
@@ -238,7 +249,14 @@ if( $function == 'sendScore'){
   add_action('wp_ajax_sendScore', 'sendScore');
   add_action('wp_ajax_nopriv_sendScore', 'sendScore');
 }
-
-
+/*******************************************************************************
+* 8. SEND SCORES
+*******************************************************************************/
+if( $function == 'upload_audio'){
+  // function(){
+  //   $fileData = $_FILES['userfile']['name'];
+  //   echo $fileData;
+  // }
+}
 
 ?>

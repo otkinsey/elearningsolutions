@@ -5,7 +5,7 @@ Description: a tutorial for world domination
 Version:1.0
 */
 
-wp_enqueue_script('els-js', '/wp-content/plugins/elearningSolutions/els.js', '1.0', true );
+wp_enqueue_script('els-js', '/wp-content/plugins/elearningSolutions/els.js', '1.0', false );
 wp_enqueue_style('els-css', '/wp-content/plugins/elearningSolutions/els.css', '1.0', true);
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 require_once(ABSPATH . 'wp-content/plugins/elearningSolutions/frontend-functions.php');
@@ -22,7 +22,7 @@ require_once(ABSPATH . 'wp-content/plugins/elearningSolutions/frontend-functions
 //     }
 //  }
 if(isset($_POST['admin_menu_form'])){
-  //$connection = new msqli('localhost','otkinsey','komet1','eliteTrainingVideos');
+  //$connection = new msqli('localhost','otkinsey','komet1','elearningSolutions');
   $firstName  = isset($_POST['els_first_name']) ? $_POST['els_first_name']  : '';
   $lastName   = isset($_POST['els_last_name'])  ? $_POST['els_last_name'] : '';
   $testDate   = isset($_POST['els_test_date'])  ? $_POST['els_test_date'] : '';
@@ -36,10 +36,10 @@ if(isset($_POST['admin_menu_form'])){
     // $wpdb->insert('e_els_scheduledExams', array('firstName'=>'', 'lastName'=>"$testName", 'meta_key'=>'els_test_date', 'meta_value'=>$testDate));
     // $wpdb->insert('e_els_scheduledExams', array('firstName'=>'', 'lastName'=>"$testName", 'meta_key'=>'els_test_name', 'meta_value'=>$testName));
     //echo $wpdb->insert_id;
-    header('Location: http://localhost:8888/practice/eliteTrainingVideos/wp-admin/admin.php?page=scheduled_exams');
+    header('Location: http://localhost:8888/practice/elearningSolutions/wp-admin/admin.php?page=scheduled_exams');
   }
   else{
-    header('Location: http://localhost:8888/practice/eliteTrainingVideos/wp-admin/admin.php?page=scheduled_exams&error=true');
+    header('Location: http://localhost:8888/practice/elearningSolutions/wp-admin/admin.php?page=scheduled_exams&error=true');
   }
   exit();
 }
@@ -72,7 +72,13 @@ function get_presentation($name){
 }
 function get_slides($id){
   global $wpdb;
-  $sql = "SELECT meta_key, meta_value FROM e_postmeta WHERE post_id = '$id' AND meta_key LIKE 'wpcf-slide-%'";
+  $sql = "SELECT meta_key, meta_value FROM e_postmeta WHERE post_id = '$id' AND meta_key LIKE 'wpcf-slide-%' AND meta_key NOT LIKE 'wpcf-slide-audio-%' ";
+  $query = $wpdb->get_results($sql);
+  return $query;
+}
+function get_audio_files($id){
+  global $wpdb;
+  $sql = "SELECT meta_key, meta_value FROM e_postmeta WHERE post_id = '$id' AND meta_key LIKE 'wpcf-slide-audio-%' ";
   $query = $wpdb->get_results($sql);
   return $query;
 }
@@ -200,51 +206,112 @@ function add_presentation_slide(){
   //var_dump($post->ID);
   $slideId = array('one','two','three','four','five','six','seven','eight','nine','ten');
   $slideContent = get_slides($post->ID);
+  $audioFiles = get_audio_files($post->ID);
+  // var_dump($audiofi);
   $b=0;
-  for($a=0;$a<10;$a++){
-    if($slideContent[$a]->meta_value){
-      echo "<div class='editor-object-container slide visible-slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
-      wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_value'=>'test','textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
-      echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div></div>";
-      $b++;
-    }
-    else{
-      echo "<div class='editor-object-container slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
-      wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_value'=>'test','textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
-      echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div></div>";
-      $b++;
-    }
-  }
-
-
-  // echo "<label style='text-transform:capitalize;font-weight:bold;'>Slide $slideId[1] </label>";
-  // wp_editor('', 'wpcf_slide_'.$slideId[1],array('textarea_name'=>'wpcf[slide-'.$slideId[1].']','editor_height'=>300));
-  // echo "<div class='button' onclick='addNewSlide(event)' id='slide-$slideId[1]' order='1'> new slide</div>";
+  $af=1;
+  echo "<div id='slideCount'>".count($slideContent)."</div>";
+  // echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
+  // for($a=0;$a<10;$a++){
+  //   if($slideContent[$a]->meta_value){
+  //     echo "<div id='slide-$slideId[$b]-container' class='editor-object-container slide visible-slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label><div class='button new-slide' onclick='deleteSlide(event)' id='slide-$slideId[$b]' order='1'>delete slide</div>";
+  //     wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
+  //     echo "<input id='audioUrlInput_$a' type='text' name='wpcf[slide-audio-file-".$af."]' value='".$audioFiles[$b]->meta_value."'>";
+  //     echo "<input id='audioFileInput_$a' class='audioFileInput' value='' type='file' id='audioFileInput_$a' name='selectAudioFile' style='visibility:hidden;position:absolute;'>";
+  //     echo "<div class='button' onclick='$(\"#audioFileInput_$a\").click()' value='select audio file'>add audio file</div class='button'>";
+  //     // add_post_meta($post->ID,'slide-'.$slideId[$b].'-audio-file', 'test ');
+  //     echo "</div>";
+  //     $b++;
+  //     $af++;
+  //   }
+  //   else{
+  //     echo "<div class='editor-object-container slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
+  //     wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
+  //     echo "<input id='audioUrlInput_$a' type='text' name='wpcf[slide-audio-file-".$af."]' value='".$audioFiles[$b]->meta_value."'>";
+  //     echo "<input multiple id='audioFileInput_$a' class='audioFileInput' value='' type='file' name='selectAudioFile' style='visibility:hidden;position:absolute;'>";
+  //     echo "<div id='button_$a' class='button' onclick='$(\"#audioFileInput_$a\").click()' value='select audio file'>add audio file</div class='button'>";
+  //     // add_post_meta($post->ID,'slide-'.$slideId[$b].'-audio-file', ' test');
+  //     echo "</div>";
+  //     $b++;
+  //     $af++;
+  //   }
+  // }
+  // echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
   ?>
   <script>
   /* GLOBAL VARIABLES */
   var nextSlide;
+  var audioInput = document.getElementsByClassName('audioFileInput');
+  var slideCount = document.getElementById('slideCount').innerHTML;
+  var slides = document.getElementsByClassName('js-wpt-field');
+  var sc=0;
+  $(document).ready(function(){
+    var insideContainer = document.querySelector('#wpcf-group-presentation-slides');
+    //console.log(insideContainer);
 
+      for( var l=0;l<slideCount*2;l++){
+        slides[l].className += ' show';
 
+      }
+    insideContainer.innerHTML += "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-"+(sc+1)+"' order='"+sc+"'> new slide</div>";
+
+  });
+  // for(var k=0;k<audioInput.length;k++){
+  //     audioInput[k].addEventListener('change', function(event){ populateAudioField(event); }, false);
+  //     console.log(audioInput[k]);
+  // }
+
+  function populateAudioField(event){
+    var fileIdStr = event.target.getAttribute('id');
+    var fileId = fileIdStr.substr(fileIdStr.lastIndexOf('_')+1);
+    var fileData = event.target.files;
+    var inputName = event.target.name;
+    var uploadButton = document.querySelector('#button_'+fileId);
+    var inputValue = event.target.value;
+    var file = fileData[0];
+    //var formData = new FormData();
+    //formData.append('audioFileData', file, file.name );
+
+    $.ajax({
+      method:'POST',
+      url: 'wp-content/plugins/elearningSolutions/ajax.php',
+      data: {'function':'audio_upload', 'fileData':file },
+      //processData: false,
+      //contentType:false,
+      success: function(data){
+        console.log('response is: '+data);
+      }
+    });
+  }
     function setAttributes(el, attrs){
       for(key in attrs){
         el.setAttribute(key, attrs[key]);
       }
     }
 
-    function addNewSlide(event){
-      var slideCount = document.getElementsByClassName('visible-slide').length;
-      var slides = document.getElementsByClassName('slide');
-      var slideIndex = ['one','two','three','four','five','six','seven','eight','nine','ten'];
+    function deleteSlide(event){
       var slideId = event.target.getAttribute('id');
-      slideOrder = event.target.getAttribute('order');
-      slideOrder++;
-      var slideContainer = document.querySelector('#exam-object-editor');
-      nextSlide = slideCount;
-      console.log(nextSlide);
-      slides[slideCount].className += ' visible-slide';
+      console.log(slideId);
+      $('#'+slideId+'-container').addClass('fadeout');
+    }
 
-      nextSlide++;
+    function addNewSlide(event){
+      // var slideCount = document.getElementsByClassName('visible-slide').length;
+      // var slides = document.getElementsByClassName('slide');
+      // var slideIndex = ['one','two','three','four','five','six','seven','eight','nine','ten'];
+      // var slideId = event.target.getAttribute('id');
+      // slideOrder = event.target.getAttribute('order');
+      // slideOrder++;
+      // var slideContainer = document.querySelector('#exam-object-editor');
+      // nextSlide = slideCount;
+      // console.log(nextSlide);
+      // slides[slideCount].className += ' visible-slide';
+      //
+      // nextSlide++;
+      slides[(slideCount*2)].className += ' show';
+      slides[(slideCount*2)+1].className += ' show';
+      slideCount++;
+      console.log('slide count is '+slideCount);
 
     }
   </script>

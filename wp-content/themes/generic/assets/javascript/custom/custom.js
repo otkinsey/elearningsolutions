@@ -102,7 +102,7 @@ function testInit(){
       // $('#question3 .o1').attr('value', 'f');
       // $('#question3 .o2').attr('value', 'f');
       // $('#question3 .o3').attr('value', 't');
-      console.log('custom.js line 76: assignCorrectAnswers');
+      console.log('custom.js line 76: '+assignCorrectAnswers);
       for(var i=0;i<options.length;i++){
         options[i].addEventListener('click', function(e){ evaluate(e); });
         setAttributes(options[i],{'style':'display:block;'})
@@ -121,8 +121,9 @@ function testInit(){
             correctAnswers++;
             console.log('number of correct answers: '+correctAnswers);
             if (totalAnswers >= totalQuestions.length){
-              var homeButton = document.querySelector('.complete .tryAgain');
+              var homeButton = document.querySelector('.complete');
               var score = (correctAnswers/totalAnswers)*100;
+              var scoreStr = toString(score);
               if(scoreStr.lastIndexOf('.') > 0 ){
                 var scoreFloat = scoreStr.substr(scoreStr.indexOf('.'));
                 if(parseFloat(scoreFloat) >= .5){
@@ -138,7 +139,7 @@ function testInit(){
               $('.correct').removeClass('moved');
               $('.complete').addClass('moved');
               $('.score').html(score+'%');
-              homeButton.addEventListener('click', function(){ sendScore(); /*location.reload();*/ });
+              homeButton.addEventListener('click', function(){ sendScore(); location.reload(); });
               return true;
             }
             $('.correct').addClass('moved');
@@ -181,7 +182,8 @@ function testInit(){
 *********************************/
       function startTest(){
         $('.question').removeClass('moved').attr('style','display:none;');
-        $('.video_border').fadeOut('slow');
+        $('.video_border, #welcome').fadeOut('slow');
+
         function removeControls(){
           $('.controls_container').removeClass('moved').attr('style', 'display:none;');
         }
@@ -253,11 +255,8 @@ function testInit(){
 /********************************
 * 7.
 *********************************/
-        function playAudio(){
-          var audio = document.querySelector('.audio1');
-          audio.play();
-          console.log('playing');
-        }
+
+
 /********************************
 * 8.
 *********************************/
@@ -415,6 +414,17 @@ function signin(event){
         var a = 1, b=0,c=1;
         // console.log(answerOptions.length);
 
+        /** html output for audio files **/
+        response.audioFiles.forEach(function(element){
+          var audioFileUrl = element.meta_value;
+          console.log('custom.js line 418: '+element.meta_value);
+          var audioTag = document.createElement('audio');
+          var audioFileContainer = document.getElementById('audioFileContainer');
+          setAttributes(audioTag, {'src':audioFileUrl, 'class':'audio_'+a, 'autoplay':'false'});
+          // audioTag.appendChild(audioFileUrl);
+          audioFileContainer.appendChild(audioTag);
+          a++;
+        });
         /** html out for presentation slides and test questions **/
         response.questions.forEach(function(element){
           var d=1;
