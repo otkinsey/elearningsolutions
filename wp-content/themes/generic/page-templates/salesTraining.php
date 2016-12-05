@@ -9,10 +9,7 @@ get_header(); ?>
 
 <!-- audio files -->
 <div id="audioFileContainer">
-	<!-- <audio class="audio_1" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_1.mp3"></audio>
-	<audio class="audio_2" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_2.mp3"></audio>
-	<audio class="audio_3" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_3.mp3"></audio>
-	<audio class="audio_4" autoplay="false" src="wp-content/themes/generic/assets/audio_files/audio_4.mp3"></audio> -->
+
 </div>
 <section id="section_five" class="section_5">
 	<div class="overlay">
@@ -122,24 +119,11 @@ get_header(); ?>
 								</div>
 							<!-- end: presentation content -->
 
-								<!--
-								**  VIDEO PLAYER CONTROL BUTTONS:
-								**  these may be brought back at a later time
-								*************************************-->
-								<!-- <audio controls class="audio1">
-									<source src="http://localhost:8888/practice/eliteTrainingVideos/wp-content/themes/generic/assets/audio_files/audio_1.m4a" type="audio/mpeg">
-								</audio>
-								<audio controls class="audio2">
-									<source src="http://localhost:8888/practice/eliteTrainingVideos/wp-content/themes/generic/assets/audio_files/audio_2.m4a" type="audio/mpeg">
-								</audio>
-								<audio controls class="audio3">
-									<source src="http://localhost:8888/practice/eliteTrainingVideos/wp-content/themes/generic/assets/audio_files/audio_3.m4a" type="audio/mpeg">
-								</audio> -->
 								<div class="controls_container">
 									<span class="control close" id="close"></span>
 									<span class="control rwd" id="rwd"></span>
-									<span onclick="controlToggle(); pauseAudio();" class="control pause" id="pause"></span>
-									<span onclick="controlToggle(); playAudio();" class="control play" id="play"></span>
+									<span onclick="controlToggle(); pauseAudio(event);" class="control pause" id="pause" style="display:inline;"></span>
+									<span onclick="controlToggle(); playAudio(event);" class="control play" id="play"></span>
 									<span class="control fwd" id="fwd"></span>
 								</div>
 						</div>

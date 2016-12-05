@@ -68,40 +68,17 @@ function testInit(){
   play = document.querySelector('.play');
   // response, raw;
   console.log('initializing...');
-  document.addEventListener('DOMContentLoaded', function(){ pauseAll();  assignCorrectAnswers(); /*setTimeout(function(){ advanceTextClick(); playAudio(); animateControls(); }, 1200);*/  });
+  document.addEventListener('DOMContentLoaded', function(){ pauseAll();  assignCorrectAnswers(); console.log('test init'); });
   rewind.addEventListener('click', function(){rewindTextClick();}, false);
   advance.addEventListener('click', function(){advanceTextClick();}, false);
   play.addEventListener('click', function(){ playAudio();  }, false);
   pause.addEventListener('click', function(){pauseTextClick();}, false);
 }
-  /* EVENT HANDLERS */
-    document.addEventListener('DOMContentLoaded', function(){ pauseAll();  /*assignCorrectAnswers(); setTimeout(function(){ advanceTextClick(); playAudio(); animateControls(); }, 1200);*/  });
-    // rewind.addEventListener('click', function(){rewindTextClick();}, false);
-    // advance.addEventListener('click', function(){advanceTextClick();}, false);
-    // play.addEventListener('click', function(){ playAudio();  }, false);
-    // pause.addEventListener('click', function(){pauseTextClick();}, false);
-
-
-    /* event handlers for options */
-    // for(var a = 0;0<options.length-1;a++){
-    //   console.log(options.length);
-    //   options[a].addEventListener('click', evaluate );
-    // }
-
 
 /********************************
 * 2.
 *********************************/
     function assignCorrectAnswers(){
-      // $('#question1 .o1').attr('value', 'f');
-      // $('#question1 .o2').attr('value', 'f');
-      // $('#question1 .o3').attr('value', 't');
-      // $('#question2 .o1').attr('value', 'f');
-      // $('#question2 .o2').attr('value', 't');
-      // $('#question2 .o3').attr('value', 'f');
-      // $('#question3 .o1').attr('value', 'f');
-      // $('#question3 .o2').attr('value', 'f');
-      // $('#question3 .o3').attr('value', 't');
       console.log('custom.js line 76: '+assignCorrectAnswers);
       for(var i=0;i<options.length;i++){
         options[i].addEventListener('click', function(e){ evaluate(e); });
@@ -167,7 +144,7 @@ function testInit(){
               $('.correct').removeClass('moved');
               $('.complete').addClass('moved');
               $('.score').html(score+'%');
-              homeButton.addEventListener('click', function(){ sendScore(); /*location.reload();*/ });
+              homeButton.addEventListener('click', function(){ sendScore(); location.reload(); });
               return true;
             }
             $('.incorrect').addClass('moved');
@@ -204,6 +181,8 @@ function testInit(){
 * 5.
 *********************************/
     function rewindTextClick(){
+      var audio = document.getElementsByTagName('audio');
+
       console.log('function name: rewindTextClick() - line 157 int is: '+index);
         if( index < 1){
           index = 0;
@@ -211,12 +190,24 @@ function testInit(){
           rwd.setAttribute('style' , 'display:none');
           return index;
         }
+
         else{
           console.log( 'function name: rewindTextClick() - line 163: index = '+index);
           index-=1;
           animateReset(index);
+          console.log('[rewindTextClick] index is: '+index);
+          console.log('[rewindTextClick] audioFile is: '+audio[index-1].src);
+          pauseAll();
+          audio[index-1].load();
           console.log( 'function name: rewindTextClick() - line 168: index = '+index);
           fwd.setAttribute('style' , 'display:inline');
+          var goToTest = document.querySelector('.go-to-test');
+          if(goToTest){
+            goToTest.remove();
+          }
+          if(play.style.display == 'inline'){
+            controlToggle();
+          }
           return index;
         }
       }
@@ -225,13 +216,14 @@ function testInit(){
 * 6.
 *********************************/
       function advanceTextClick(){
-        console.log('function name: advanceTextClick() - line 147 animatedItemsNum is: '+animatedItemsNum);
+        var audio = document.getElementsByTagName('audio');
+        // console.log('function name: advanceTextClick() - line 147 animatedItemsNum is: '+animatedItemsNum);
           if( index == animatedItemsNum ){
             index = animatedItemsNum;
             fwd.setAttribute('style' , 'display:none');
             rwd.setAttribute('style' , 'display:inline');
             $(controls).append('<span onclick="startTest(), assignCorrectAnswers()" class="control go-to-test">go to test <i class="fa fa-arrow-right"></i></span> ');
-            console.log('line 141: Index limit reached index reset to: '+(animatedItemsNum-1));
+            // console.log('line 141: Index limit reached index reset to: '+(animatedItemsNum-1));
             return index;
           }
           else{
@@ -243,11 +235,20 @@ function testInit(){
                 animateIn(index);
                 console.log( 'function name: advanceTextClick() - function #5 = '+index);
               }
-              index+=1;
+
               rwd.setAttribute('style' , 'display:inline');
-              playAudio();
-              // var timeout = setTimeout( function(){highlightedItems[hl_index].className += ' highlighted'; hl_index++; return hl_index;}, 1000);
-              console.log( 'function name: advanceTextClick() - line 189: index = '+index);
+
+              console.log('[advanceTextClick] index is: '+index);
+              console.log('[advanceTextClick] audioFile is: '+audio[index].src);
+              pauseAll();
+              // playAudio();
+              audio[index].load();
+              audio[index].play();
+              if(play.style.display == 'inline'){
+                controlToggle();
+              }
+              // console.log( 'function name: advanceTextClick() - line 189: index = '+index);
+              index+=1;
               return index;
           }
       }
@@ -341,19 +342,29 @@ function testInit(){
           function playAudio(){
             var audio = document.querySelector('.audio_'+index);
             var audioFiles = document.getElementsByTagName('audio');
-            for(var a = 0;a<audioFiles.length-1;a++){
-              audioFiles[a].pause();
+            console.log('[playAudio] number of audio files: '+audioFiles.length);
+            if(audio == null){
+              return;
             }
-            audio.play();
-            // console.log(audio);
+            else{
+              for(var a = 0;a<audioFiles.length;a++){
+                audioFiles[a].pause();
+                console.log('playAudio: pausing...');
+              }
+               audio.play();
+               console.log('playAudio: playing...');
+           }
+            console.log('custom.js line 355: index is '+index);
           }
 
 /********************************
 * 16.
 *********************************/
-          function pauseAudio(){
+          function pauseAudio(event){
+            console.log(event);
             var audio = document.querySelector('.audio_'+index);
-            audio.play();
+            // var audio = document.querySelector('.audio');
+            audio.pause();
             console.log(audio);
           }
 
@@ -362,17 +373,24 @@ function testInit(){
 *********************************/
           function pauseAll(){
             var audioFiles = document.getElementsByTagName('audio');
-            for(var a = 0;a<audioFiles.length-1;a++){
+            for(var a = 0;a<audioFiles.length;a++){
               audioFiles[a].pause();
             }
+            console.log(' pauseAll paused');
           }
 
 /********************************
 * 18.
 *********************************/
         function controlToggle(){
-          $('.play').toggle();
-          $('.pause').toggle();
+        if( play.style.display == 'inline'){
+          play.style.display = 'none';
+        }
+        else{ play.style.display = 'inline'}
+        if( pause.style.display == 'inline'){
+          pause.style.display = 'none';
+        }
+        else{ pause.style.display = 'inline'}
           $('.control').removeClass('highlight');
         }
 
@@ -470,6 +488,7 @@ function signin(event){
           a++;b++;
         });
         testInit();
+        pauseAll();
       }
       else{
         alert('No response. There was a database error');

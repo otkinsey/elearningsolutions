@@ -90,7 +90,10 @@ audio{
 .question.moved{
 	opacity:1;
 }
-#question1, #question2, #question3{
+/*#question1, #question2, #question3{
+	display:none;
+}*/
+.question {
 	display:none;
 }
 .background_container {
@@ -254,59 +257,21 @@ audio{
 	position: absolute;
 	bottom: 7px;
 	left: 0;
-	background: url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/09/audio.png') no-repeat center/contain, #000;
+	background:  url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play_grey.png') no-repeat 14px 10px/45%, #000  ;
 	height: 39px;
 	width: 39px;
 	border-radius: 50%;
 	overflow: hidden;
-	background-position-y: -1px;
 	right: 0;
 	margin: auto;
 	display: none;
 }
 .play:hover {
-	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/09/audioHighlight.png') no-repeat center/108%;
+	background:  url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play.png') no-repeat 14px 10px/45%, #000;
 }
 .presentation_text {
 	height: 100%;
 	position:relative;
-}
-.signIn {
-	max-width: 560px;
-	background: white;
-	padding: 30px;
-	border-radius: 4px;
-	box-shadow: 0 2px 12px 0 rgba(0,0,0,.6);
-	margin: auto;
-	border-top: 1px solid rgba(255,255,255,.3);
-	border-left: rgba(255,255,255,.07) 1px solid;
-}
-.sign-in-form {
-	position: relative;
-	z-index: 999;
-	width: 100% !important;
-}
-.signIn form {
-	width: 400px;
-}
-.signIn .button {
-	width: 100%;
-	height: 3rem;
-}
-.video_container h1 {
-	width: 560px !important;
-	margin: 30px auto;
-}
-.textItem h1, .signIn-text h1, .video_container h1 {
-	font-family: 'impact';
-	font-size: 37px;
-	display: block;
-	color: white;
-	text-align: left;
-	width: 100%;
-	line-height: 45px;
-	text-transform: capitalize;
-	margin-bottom: 20px;
 }
 .presentation_text .textItem body {
 	color: #fff;
@@ -340,6 +305,50 @@ audio{
 }
 .presentation_text .textItem.movedOut{
 	right: 100%;
+}
+.signIn {
+	max-width: 560px;
+	background: white;
+	padding: 30px;
+	border-radius: 4px;
+	/*box-shadow: 0 2px 12px 0 rgba(0,0,0,.6);*/
+	margin: auto;
+	border-top: 1px solid rgba(255,255,255,.3);
+	border-left: rgba(255,255,255,.07) 1px solid;
+}
+.sign-in-form {
+	position: relative;
+	z-index: 999;
+	width: 100% !important;
+}
+.signIn form {
+	width: 400px;
+}
+.signIn .button {
+	width: 100%;
+	height: 3rem;
+}
+
+.textItem h1, .signIn-text h1, .video_container h1 {
+	font-family: 'impact';
+	font-size: 37px;
+	display: block;
+	color: white;
+	text-align: left;
+	width: 100%;
+	line-height: 45px;
+	text-transform: capitalize;
+	margin-bottom: 20px;
+}
+.textItem body h1 {
+	position: relative;
+	margin: 40px 0 20px;
+	font-family: lato;
+	width: 100% !important;
+}
+.video_container h1 {
+	width: 560px !important;
+	margin: 30px auto;
 }
 .rwd {
 	position: absolute;
