@@ -643,16 +643,29 @@ function exam_questions(){
         });
       }
 
-      // function updateExamQuestions(){
-      //   var q = document.getElementsByClassName('examQuestion');
-      //   var metaid, postid, metakey, metvalue,examQuestions=[];
-      //   for(var a=0;a<q.length;a++){
-      //     examQuestions.push('meta-id':q[a].document.getAttribute(''));
-      //   }
-      // }
-      /*** THIS SEEMS TO BE A LEGACY FUNCTION THAT WAS LEFT INCOMPLETE.
-      **** MAY NOT BE NEED SINCE ADD FUNCTION DISTINGUISHES BETWEEN
-      **** INSERT AND UPDATE QUERIES- REVISIT ***/
+      function ajaxUpdate(param, inputValue){
+        var item_id = id;
+        var id = param.target.getAttribute('examID');
+        var col_name = param.target.getAttribute('columnName');
+        var value = inputValue;
+        var ajaxContent = param.target;
+        ajaxContent.innerHTML = inputValue;
+        console.log(id+', '+col_name+', '+value);
+        $.ajax({
+          url:'../wp-content/plugins/elearningSolutions/ajax.php',
+          method:'POST',
+          data:{'id':id,'function':'update','col_name':col_name,'value':value},
+          dataType:'html',
+          success:function(results){
+            console.log(results);
+          },
+          error:function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            console.log(thrownError);
+          }
+        });
+      }
 
       function removeScheduledExam(id){
         $('.admin_row.info_'+id).fadeOut(400);
@@ -686,7 +699,7 @@ function exam_questions(){
           ajaxInput.addEventListener('change', function(){ elementContent = ajaxInput.value; return elementContent; }, false);
 
           var ajaxSendControl = document.querySelector('#ajaxSend');
-          console.log(elementContent);
+          console.log('[admin-functions] test for ajaxInput: '+ajaxInput.id);
           ajaxSendControl.addEventListener('click', function(){ ajaxUpdate(ajaxEvent, elementContent); }, false);
           ajaxEvent.target.className += ' update';
         }

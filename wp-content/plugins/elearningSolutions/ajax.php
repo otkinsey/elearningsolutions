@@ -150,7 +150,7 @@ if($function == 'update'){
           // var_dump($id);
       if(isset($id)){
           $id = isset($id) ? $id : '';
-          $query = $wpdb->update();
+          $query = $wpdb->update('e_els_scheduledExams', array($col_name=>$value), array('examID'=>$id));
           // var_dump($id);
       }
       return $id;
