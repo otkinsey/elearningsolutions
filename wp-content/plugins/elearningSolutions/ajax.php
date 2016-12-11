@@ -252,11 +252,15 @@ if( $function == 'sendScore'){
 /*******************************************************************************
 * 8. SEND SCORES
 *******************************************************************************/
-if( $function == 'upload_audio'){
-  // function(){
-  //   $fileData = $_FILES['userfile']['name'];
-  //   echo $fileData;
-  // }
+if( $function == 'removeSlide'){
+  function deleteSlide(){
+    $postId = $_POST['postId'];
+    $slideNumber = $_POST['slideNumber'];
+    delete_presentation_slide($postId, trim($slideNumber,"'"));
+  }
+  deleteSlide();
+  add_action('wp_ajax_deleteSlide', 'deleteSlide');
+  add_action('wp_ajax_nopriv_deleteSlide', 'deleteSlide');
 }
 
 ?>

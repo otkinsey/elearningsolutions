@@ -175,6 +175,7 @@ function testInit(){
           testVar++;
         }
         console.log('custom.js line 126: testVar is'+testVar);
+        pauseAudio();
         return testVar;
       }
 /********************************

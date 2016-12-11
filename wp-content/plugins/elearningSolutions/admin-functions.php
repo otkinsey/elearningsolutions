@@ -190,6 +190,12 @@ function delete_schedule_assessment($id){
   $query = $wpdb->delete('e_els_scheduledExams', array('meta_id'=>$id));
   return $query;
 }
+function delete_presentation_slide($postId, $slideNumber){
+  global $wpdb;
+  $str = "DELETE FROM e_postmeta WHERE (post_id='$postId' AND meta_key = 'wpcf-slide-$slideNumber') OR(meta_key ='wpcf-slide-audio-file-$slideNumber')";
+  $query = $wpdb->query($str);
+  return $query;
+}
 /*******************************************************************************
 *
 *  ADMIN OUTPUT FUNCTIONS
@@ -205,62 +211,120 @@ function add_presentation_slide(){
   global $post;
   //var_dump($post->ID);
   $slideId = array('one','two','three','four','five','six','seven','eight','nine','ten');
-  $slideContent = get_slides($post->ID);
+  $numberOfSlides= get_slides($post->ID);
   $audioFiles = get_audio_files($post->ID);
-  // var_dump($audiofi);
+  $displayTheseSlides = array();
+
+  foreach($numberOfSlides as $key=>$value){
+    $displayTheseSlides[] = substr( $value->meta_key ,strrpos($value->meta_key, '-')+1);
+
+  }
+  var_dump($displayTheseSlides);
   $b=0;
   $af=1;
-  echo "<div id='slideCount'>".count($slideContent)."</div>";
-  // echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
-  // for($a=0;$a<10;$a++){
-  //   if($slideContent[$a]->meta_value){
-  //     echo "<div id='slide-$slideId[$b]-container' class='editor-object-container slide visible-slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label><div class='button new-slide' onclick='deleteSlide(event)' id='slide-$slideId[$b]' order='1'>delete slide</div>";
-  //     wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
-  //     echo "<input id='audioUrlInput_$a' type='text' name='wpcf[slide-audio-file-".$af."]' value='".$audioFiles[$b]->meta_value."'>";
-  //     echo "<input id='audioFileInput_$a' class='audioFileInput' value='' type='file' id='audioFileInput_$a' name='selectAudioFile' style='visibility:hidden;position:absolute;'>";
-  //     echo "<div class='button' onclick='$(\"#audioFileInput_$a\").click()' value='select audio file'>add audio file</div class='button'>";
-  //     // add_post_meta($post->ID,'slide-'.$slideId[$b].'-audio-file', 'test ');
-  //     echo "</div>";
-  //     $b++;
-  //     $af++;
-  //   }
-  //   else{
-  //     echo "<div class='editor-object-container slide'><label class='slide-label' style='display:block;text-transform:capitalize;font-weight:bold;'>Slide $slideId[$b] </label>";
-  //     wp_editor($slideContent[$a]->meta_value, 'wpcf_slide_'.$slideId[$b],array('textarea_name'=>'wpcf[slide-'.$slideId[$b].']','editor_height'=>300));
-  //     echo "<input id='audioUrlInput_$a' type='text' name='wpcf[slide-audio-file-".$af."]' value='".$audioFiles[$b]->meta_value."'>";
-  //     echo "<input multiple id='audioFileInput_$a' class='audioFileInput' value='' type='file' name='selectAudioFile' style='visibility:hidden;position:absolute;'>";
-  //     echo "<div id='button_$a' class='button' onclick='$(\"#audioFileInput_$a\").click()' value='select audio file'>add audio file</div class='button'>";
-  //     // add_post_meta($post->ID,'slide-'.$slideId[$b].'-audio-file', ' test');
-  //     echo "</div>";
-  //     $b++;
-  //     $af++;
-  //   }
-  // }
-  // echo "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-$slideId[$b]' order='1'> new slide</div>";
+  echo "<div id='slideCount'>"./*count($numberOfSlides)*/json_encode($displayTheseSlides)."</div>";
+
   ?>
   <script>
   /* GLOBAL VARIABLES */
+  document.addEventListener('DOMContentLoaded', presentationAdminInit, false);
   var nextSlide;
-  var audioInput = document.getElementsByClassName('audioFileInput');
-  var slideCount = document.getElementById('slideCount').innerHTML;
-  var slides = document.getElementsByClassName('js-wpt-field');
-  var sc=0;
-  $(document).ready(function(){
+  var audioInput ;
+  var slideArray ;
+  var slideArrayJSON ;
+  var slideTextEditor ;
+  var slideCount ;
+  var slideElements ;
+  var audioFileSelectors ;
+  var slide ;
+  var sc;
+  var deleteNode = document.createElement('div');
+  var deleteId;
+  var newSlideNode;
+  var visibleSlides;
+  function presentationAdminInit(){
+  var slideContainer =  document.querySelector('#wpcf-group-presentation-slides.postbox');
+  slideContainer.className = 'postbox';
+  nextSlide;
+  audioInput = document.getElementsByClassName('audioFileInput');
+  slideArray = document.getElementById('slideCount').innerHTML;
+  slideArrayJSON = JSON.parse(slideArray);
+  slideTextEditor = document.getElementsByClassName('wp-editor-area');
+  slideCount = slideArrayJSON.length;
+  slideElements = document.getElementsByClassName('js-wpt-wysiwyg');
+  visibleSlides = document.getElementsByClassName('js-wpt-wysiwyg show');
+  audioFileSelectors = document.getElementsByClassName('wpt-file');
+  slide = document.getElementsByClassName('js-wpt-wysiwyg');
+  sc=0;
+  for( var l=0;l<10;l++){
+    if(slideTextEditor[l].innerHTML == ""){
+      console.log('no text');
+      continue;
+    }
+    else{
+      slideElements[l].className += ' show';
+      audioFileSelectors[l].className += ' show';
+    }
+  }
+  deleteNode = document.createElement('div');
+  deleteNode.className = 'delete button';
+  deleteNode.innerHTML = 'delete slide';
+  deleteNode.setAttribute("onclick","removeSlide(event)");
+  deleteId = visibleSlides.length;
+  console.log('[admin-functions] line-244 slideElements: '+slideElements.length);
+  // $(document).ready(function(){
     var insideContainer = document.querySelector('#wpcf-group-presentation-slides');
+    var deleteNodeVar=0;
     //console.log(insideContainer);
+    for( var l=0;l<slideCount;l++){
+      var numArray = ['one','two','three','four','five','six','seven','eight','nine','ten'];
 
-      for( var l=0;l<slideCount*2;l++){
-        slides[l].className += ' show';
+      deleteNodeVar++;
+    }
+    console.log('[admin-functions.php] inside document.ready slideCount is: '+slideCount)
+    newSlideNode = document.createElement('div');
+    newSlideNode.className = 'delete button';
+    newSlideNode.innerHTML = 'add slide';
+    newSlideNode.setAttribute("onclick","addNewSlide(event)");
+    newSlideId = sc+1;
+    // insideContainer.innerHTML += "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-"+(sc+1)+"' order='"+sc+"'> new slide</div>";
+    newSlideNode.id = newSlideId;
+    deleteNode.id = deleteId;
+    insideContainer.appendChild(newSlideNode);
+    insideContainer.appendChild(deleteNode);
 
-      }
-    insideContainer.innerHTML += "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-"+(sc+1)+"' order='"+sc+"'> new slide</div>";
-
-  });
+  // });
   // for(var k=0;k<audioInput.length;k++){
   //     audioInput[k].addEventListener('change', function(event){ populateAudioField(event); }, false);
   //     console.log(audioInput[k]);
   // }
+}
+  function removeSlide(event){
+    var slideId = event.target.id;
 
+    var targetSlide = document.querySelector("[data-wpt-id=wpcf-slide-"+slideId+"]");
+    var targetAudioFile = document.querySelector("[data-wpt-id=wpcf-slide-audio-file-"+slideId+"]");
+
+    $(visibleSlides[slideId-1]).animate({opacity:0}, 500);
+    $(audioFileSelectors[slideId-1]).animate({opacity:0}, 500);
+    // setTimeout(function(){ $(visibleSlides[slideId-1]).removeClass('show');$(audioFileSelectors[slideId-1]).removeClass('show'); }, 600);
+    console.log('[admin-function] line-311 slideId: '+visibleSlides[(slideId-1)].className);
+    setTimeout(function(){ visibleSlides[(slideId-1)].setAttribute('style','display:none !important;'); audioFileSelectors[(slideId-1)].setAttribute('style','display:none !important;') }, 600);
+
+    // $.ajax({
+    //   method:'post',
+    //   url:'../wp-content/plugins/elearningSolutions/ajax.php',
+    //   data:{'function':'removeSlide','postId':'<?php echo $post->ID; ?>','slideNumber':slideId },
+    //   success: function(data){
+    //     console.log('[removeSlide] response is: '+data);
+    //   }
+    // });
+    deleteId--;
+    slideCount -= 1;
+    console.log('[admin-functions] removeSlide() slideCount: '+deleteId);
+    deleteNode.id = deleteId;
+    //newSlideNode.id = sc;
+  }
   function populateAudioField(event){
     var fileIdStr = event.target.getAttribute('id');
     var fileId = fileIdStr.substr(fileIdStr.lastIndexOf('_')+1);
@@ -308,11 +372,13 @@ function add_presentation_slide(){
       // slides[slideCount].className += ' visible-slide';
       //
       // nextSlide++;
-      slides[(slideCount*2)].className += ' show';
-      slides[(slideCount*2)+1].className += ' show';
+      slideElements[(slideCount)].setAttribute('style','display:block !important;');
+      audioFileSelectors[(slideCount)].setAttribute('style','display:block !important;');
       slideCount++;
-      console.log('slide count is '+slideCount);
-
+      deleteId++;
+      deleteNode.id = deleteId;
+      console.log('[admin-functions] addNewSlide() slide count is '+slideCount);
+      console.log('[admin-functions] addNewSlide() deleteId is '+deleteId);
     }
   </script>
   <?
