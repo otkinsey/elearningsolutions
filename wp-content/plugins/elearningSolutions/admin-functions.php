@@ -679,8 +679,8 @@ function exam_questions(){
              <div class='admin_data checkbox_column columns'><i onclick='ajax_request(<? echo $item->examID; ?>);removeScheduledExam(<? echo $item->examID; ?>)' class='fa fa-times removeScheduledExam'></i></div>
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='firstName' onclick='updateScheduledExams(event)'><? echo $item->firstName; ?></div>
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='lastName' onclick='updateScheduledExams(event)'><? echo $item->lastName; ?></div>
-             <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='examDate' onclick='updateScheduledExams(event)'><? echo $item->userName; ?></div>
-             <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='examDate' onclick='updateScheduledExams(event)'><? echo $item->password; ?></div>
+             <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='userName' onclick='updateScheduledExams(event)'><? echo $item->userName; ?></div>
+             <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='password' onclick='updateScheduledExams(event)'><? echo $item->password; ?></div>
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='examDate' onclick='updateScheduledExams(event)'><? echo $item->examDate; ?></div>
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='testName' onclick='updateScheduledExams(event)'><? echo $testName[0]->post_title; ?></div>
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='score' onclick='updateScheduledExams(event)'><? echo $item->score; ?></div>
@@ -710,8 +710,9 @@ function exam_questions(){
       }
 
       function ajaxUpdate(param, inputValue){
-        var item_id = id;
+
         var id = param.target.getAttribute('examID');
+        var item_id = id;
         var col_name = param.target.getAttribute('columnName');
         var value = inputValue;
         var ajaxContent = param.target;
