@@ -322,12 +322,14 @@ function testInit(){
       }
 
 /********************************
-* 13.
+* 13. Highlight functions
 *********************************/
         function highlightPlay(){
           $(play).addClass('highlight');
         }
-
+        function highlightAdvance(){
+          $(advance).addClass('highlight');
+        }
 /********************************
 * 14.
 *********************************/
@@ -499,6 +501,8 @@ function signin(event){
       response = 'request failed...';
     }
   });
+  $('html, body').animate({'scrollTop':'100px'}, 600);
+  setTimeout(function(){ highlightAdvance(); }, 24000);
 }
 /********************************
 * 21.

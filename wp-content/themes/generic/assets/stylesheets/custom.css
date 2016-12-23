@@ -34,9 +34,9 @@ h3 {
 section h3 {
 	text-align: left;
 	font-weight: normal;
-	color: #85CFB4;
+	color: #3B9675;
 	line-height: 0px;
-	margin: 8px 0 48px 0px;
+	margin: 8px 0 20px 0px;
 	font-family: 'lato';
 	font-size: 30px;
 }
@@ -152,6 +152,8 @@ audio{
 	width: 32px;
 	border-radius: 50%;
 	overflow: hidden;
+	box-shadow: 0;
+	transition: box-shadow 600ms ease;
 }
 .fwd:hover {
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/fwd.gif') no-repeat center/106%;
@@ -167,35 +169,48 @@ audio{
 .highlight{
 	color: #ffffff;
 	box-shadow: 0px 0px 7px 5px rgb(255, 255, 255);
-	transition: color 1s ease;
+	/*transition: color 1s ease;*/
 }
 .highlight.highlighted{
 	color: #fec195;
 }
-[type="text"], [type="password"], [type="date"], [type="datetime"],
-[type="datetime-local"], [type="month"], [type="week"], [type="email"],
-[type="number"], [type="search"], [type="tel"], [type="time"],
-[type="url"], [type="color"], textarea {
+[type="text"], [type="password"], [type="date"],
+[type="datetime"], [type="datetime-local"],
+[type="month"], [type="week"], [type="email"],
+[type="number"], [type="search"], [type="tel"],
+[type="time"], [type="url"], [type="color"], textarea {
 	display: block;
 	box-sizing: border-box;
 	width: 100%;
 	height: 3rem;
 	padding: .5rem;
-	border-bottom: 1px solid #cacaca;
-	margin: 0 0 1rem;
+	border-bottom: 1px solid #88d0b6;
+	margin: 20px auto 1rem auto;
 	font-family: inherit;
 	font-size: 1rem;
 	color: #0a0a0a;
-	background-color: rgba(23, 6, 6, 0.09);
-	box-shadow: inset 0 1px 2px rgba(10, 10, 10, .1);
+	background-color: rgba(255,255,255,1);
+	box-shadow: none;
 	border-radius: 0;
 	transition: box-shadow .5s, border-color .25s ease-in-out;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	border-top: 1px solid #BDB9B9;
-	border-left: 1px solid #BDB9B9;
-	border-right: 1px solid #BDB9B9;
+	border-top: 1px solid #8CD1B8;
+	border-left: 1px solid #8CD1B8;
+	border-right: 1px solid #8CD1B8;
 	border-radius: 4px;
+}
+[type="text"]:focus, [type="password"]:focus, [type="date"]:focus,
+[type="datetime"]:focus, [type="datetime-local"]:focus,
+[type="month"]:focus, [type="week"]:focus, [type="email"]:focus,
+[type="number"]:focus, [type="search"]:focus, [type="tel"]:focus,
+[type="time"]:focus, [type="url"]:focus,
+[type="color"]:focus, textarea:focus {
+	border: 1px solid #f36c45;
+	background-color: #ffffff;
+	outline: 0;
+	box-shadow: none;
+	transition: box-shadow .5s, border-color .25s ease-in-out;
 }
 .logo{
 	padding: 0;
@@ -308,10 +323,10 @@ audio{
 }
 .signIn {
 	max-width: 560px;
-	background: white;
+	background: #ffffff;
 	padding: 30px;
 	border-radius: 4px;
-	/*box-shadow: 0 2px 12px 0 rgba(0,0,0,.6);*/
+	/* box-shadow: 0 2px 12px 0 rgba(0,0,0,.6); */
 	margin: auto;
 	border-top: 1px solid rgba(255,255,255,.3);
 	border-left: rgba(255,255,255,.07) 1px solid;
@@ -319,10 +334,24 @@ audio{
 .sign-in-form {
 	position: relative;
 	z-index: 999;
-	width: 100% !important;
+	width: 90% !important;
+	margin: auto;
+}
+.sign-in-form h3 {
+	width: 100%;
+	margin: 22px auto 18px auto;
+}
+.sign-in-form div {
+	margin: 22px auto 31px;
+	display: block;
+	color: #F15A2E;
 }
 .signIn form {
 	width: 400px;
+}
+.sign-in-form .button {
+	margin: 20px auto 22px;
+	width: 100% !important;
 }
 .signIn .button {
 	width: 100%;
@@ -373,6 +402,8 @@ audio{
 .overflow_container {
 	display: inline-block;
 	width: 100%;
+	overflow: hidden;
+	min-height: 700px;
 }
 .section_two {
   color: #fff;
@@ -472,7 +503,7 @@ audio{
 	overflow: visible;
 	width: 100%;
 	max-width: 880px;
-	top: 80px;
+	top: 32px;
 }
 .section_5 .wa_image img {
 	display: block;
@@ -630,9 +661,9 @@ video {
 	top: 0;
 }
 .video_border {
-	height: 361px;
-	overflow: hidden;
-	top: 80px;
+	/* height: 361px; */
+	/* overflow: hidden; */
+	top: 0px;
 	position: absolute;
 	width: 100%;
 	margin: auto;
@@ -712,7 +743,7 @@ video {
 	position: relative;
 	margin: auto;
 	/* padding: 1rem; */
-	width: 170px;
+	width: 100%;
 }
 .wa_image.image_two img {
 	width: 220px;
@@ -1156,12 +1187,12 @@ input, textarea {
 	padding: .85em 1em;
 	margin: 1rem 0 1rem;
 	font-size: .9rem;
-	background-color: #f15a2e;
-	color: #fff;
+	background-color: #3b9675;
+	color: #fff !important;
 	min-width: 6rem;
 }
 .button:focus, .button:hover {
-	background-color: #fea50a;
+	background-color: #5ebf9b;
 	color: #fff;
 }
 @media screen and (max-width: 650px){

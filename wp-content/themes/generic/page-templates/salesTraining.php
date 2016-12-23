@@ -38,7 +38,7 @@ get_header(); ?>
 					<!--video player-->
 					<div class="overflow_container" style="background: url('')">
 						<div class="video_container columns wow slideInRight" >
-							<h1 id="welcome">Welcome to the Elearning Solutions Demo Application!</h1>
+							<!-- <h1 id="welcome">Welcome to the Elearning Solutions Demo Application!</h1> -->
 							<!-- begin: presentation content -->
 								<div class="signIn">
 									<div class="signIn-text">
@@ -47,7 +47,8 @@ get_header(); ?>
 										<!-- The following presentation demonstrates the functional and aesthetic features that are possible with a learning application from Elearning solutions.  The features of this application are fully customizable, and represent a small portion of the full range of functional, visual, and administrative features that can be provided. Please enter your username and password in the form below to begin. -->
 									</div>
 									<form class="sign-in-form" action="" method="">
-										<h3>Sign in Here.</h3>
+										<h3>Sign in Here</h3>
+										<div>Enter your username and passcode.</div>
 										<input id="username" type="text" name="username" placeholder="username">
 										<input id="password" type="password" name="password" placeholder="password">
 										<input type="hidden" name="function" value="sign-in">
