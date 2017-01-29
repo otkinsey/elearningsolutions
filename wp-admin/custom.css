@@ -1,30 +1,67 @@
+.page-title-action
+
 html, body {
 	background: white;
 }
-
+hr {
+  border-bottom: 1px solid #cacaca !important;
+  margin: 20px 0 !important;
+  max-width: 100% !important;
+}
+a {
+  background-color: transparent;
+  color: #3b9675 !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:active, a:hover {
+	color: #F06B3F !important;
+}
+h1 {
+  font-size: 1.8rem !important;
+  border-bottom: 1px solid #d64e21;
+  max-width: 500px;
+  padding: 0 0 5px !important;
+}
+h1 .fa {
+    color: rgba(59, 150, 117, 0.5);
+}
+h2 {
+    font-size: 1.35rem !important;
+}
+h1, h2, h3 {
+  /* color: #3b9675 !important; */
+  font-weight: 200 !important;
+  margin-bottom: 20px !important;
+}
+li.wp-not-current-submenu.wp-menu-separator {
+    display: none;
+}
+ol ol, ol ul, ul ol, ul ul {
+    margin-left: 0 !important;
+    margin-bottom: 0;
+}
 .admin_data {
 	border-style: solid;
 	border-color: rgba(200,200,200,.001);
 	border-width: 1px;
 	transition: border-color .25s ease;
 	position: relative;
-	height: 66px;
+	height: 40px;
 	margin-bottom: 15px;
 }
 .admin_data.update {
 	border-color: rgba(200,200,200,1);
 }
-#ajaxSend:before {
-	position: absolute;
-	right: 20px;
-	top: 4px;
-	color: #7bbe42;
+.admin_row {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 9px;
+  height: 40px;
+  border-top: 1px solid #e0e0e0;
 }
-#ajaxCancel:before {
-	position: absolute;
-	right: 40px;
-	top: 4px;
-	color: red;
+.column:last-child:not(:first-child), .columns:last-child:not(:first-child) {
+    float: left;
 }
 .editor-object-container{
 	display: none;
@@ -41,6 +78,9 @@ html, body {
 .heading{
 	font-weight:bold;
 }
+.js-wpt-field{
+	display: none;
+}
 .info_1
 .scheduled_exams input,
 .scheduled_exams select {
@@ -48,20 +88,40 @@ html, body {
 	height: 42px;
 	display: block;
 }
-
-.scheduled_exams button, .scheduled_exams .button, #addQuestion {
-	/* min-width: 100px; */
-	/* width: 100px; */
-	height: 36px;
-	display: inline-block;
-	color: white;
-	font-weight: bold;
-	text-transform: uppercase;
-	background: #7BBE42;
-	transition: background .25s ease;
+.delete.button,.button-primary, .scheduled_exams button, .page-title-action, .scheduled_exams .button, #addQuestion {
+	height: 30px !important;
+	display: inline-block !important;
+	padding: 0px 8px !important;
+	color: white !important;
+	font-weight: bold !important;
+	text-transform: capitalize;
+	background: #d64e21 !important;
+	transition: background .25s ease !important;
+	text-shadow: none !important;
+	border: none !important;
+	min-width: 50px !important;
+	margin:10px;
 }
-.js-wpt-field{
-	display: none;
+.wp-core-ui
+.scheduled_exams input, .scheduled_exams select {
+    width: 13.5%;
+    display: inline;
+    height: 30px !important;
+    float: left;
+    margin-right: .5%;
+    padding: 0px 10px;
+    font-size: .8rem;
+    border-radius: 3px;
+}
+#adminmenu li.current a.menu-top {
+  font-weight: normal !important;
+  background: white !important;
+	color:#f15a2e !important;
+	border-right:none;
+}
+#wpbody {
+    position: relative;
+    padding-top: 40px;
 }
 .show {
 	display:block !important;
@@ -71,7 +131,9 @@ html, body {
 	background: #4C9ED9;
 	color:white;
 }
-
+.update-nag {
+  display: none !important;
+}
 .updateColumn{ position:absolute;background:white;top:0;left:0; }
 .updateColumn input {
 	border: 0;
@@ -91,34 +153,38 @@ html, body {
 	text-decoration: none;
 	text-shadow: none;
 }*/
-a {
-	background-color: transparent;
-	color: #d54e21 !important;
-	text-decoration: none;
-	cursor: pointer;
-}
-a:active, a:hover {
-	color: #F06B3F !important;
-}
-h1, h2, h3 {
-	color: #3b9675 !important;
-}
+
 #misc-publishing-actions span {
 	color: #3b9675;
 }
-.wp-core-ui .button-primary,.page-title-action, .wp-core-ui .toolset-message-after-activate .button-primary, #poststuff .wpcf-fields-add-new {
-	background-color: #3b9675 !important;
+ #adminmenu .wp-submenu {
+    background-color: #e6e6e6 !important;
+}
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
+    background: white !important;
+    color: #d54e21 !important;
+    font-weight: normal;
+}
+#adminmenu .wp-submenu{
+	padding: 0;
+}
+.wp-core-ui .button-primary, .wp-core-ui .toolset-message-after-activate .button-primary, #poststuff .wpcf-fields-add-new {
+	/*background-color: #3b9675 !important;*/
 	/*border-color: #3b9675;*/
-	border: none !important;
+	/*border: none !important;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	text-shadow: none;
 	font-weight: bold;
-	color: #fff !important;
+	color: #fff !important;*/
 }
 #comment-link-box, #edit-slug-box {
 	line-height: 24px;
 	color: #3B9675 !important;
+}
+
+#collapse-menu, #collapse-button div::after {
+    color: #a0a5aa;
 }
 .wp-core-ui .button-primary.focus,.page-title-action:focus,.page-title-action:hover, .wp-core-ui .button-primary.hover, .wp-core-ui .button-primary:focus, .wp-core-ui .button-primary:hover {
 	background: #F06B3F !important;
@@ -148,12 +214,11 @@ h1, h2, h3 {
 }
 
 .admin_data .fa-times:before {
-	color:#7bbe42;
-	transition: color .25s ease
+  color: #f0a78f;
+  transition: color .25s ease;
 }
-
 .admin_data .fa-times:hover:before {
-	color:#f20c1c;
+	color:red;
 }
 
 .scheduled_exams .large-2 {
@@ -164,16 +229,58 @@ h1, h2, h3 {
 .checkbox_column {
 	width:40px !important;
 }
+#adminmenuback {
+ 	background-color: #e6e6e6 !important;
+}
+#adminmenu {
+  clear: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: rgba(0,0,0,0.1) !important;
+}
+#ajaxSend:before {
+	position: absolute;
+	right: 20px;
+	top: 4px;
+	color: #7bbe42;
+}
+#ajaxCancel:before {
+	position: absolute;
+	right: 40px;
+	top: 4px;
+	color: red;
+}
+#adminmenuwrap {
+  width: 160px;
+  background-color: white !important;
+  margin-top: 30px;
+}
 #adminmenu a {
-	display: block;
-	line-height: 18px;
-	padding: 2px 5px;
-	color: #fff !important;
+  display: block;
+  line-height: 18px;
+  padding: 2px 5px;
+  color: #3b9675 !important;
+}
+#adminmenu .wp-submenu li {
+	background: #f8f8f8 !important;
+}
+#adminmenu .wp-submenu li a {
+	color: #818080 !important;
+	font-weight: normal !important;
+}
+#adminmenu .wp-submenu li a:hover{
+	color:#d64e21 !important;
 }
 #adminmenu div.wp-menu-image::before {
-	color: rgb(0, 136, 105) !important;
+  color: #3b9675 !important;
 }
-#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap {
-	width: 160px;
-	background-color: rgb(126, 192, 168) !important;
+#adminmenu .current .wp-menu-image::before {
+    color: #d64e21 !important;
+}
+#adminmenu .current div.wp-menu-image::before, #adminmenu .wp-has-current-submenu div.wp-menu-image::before, #adminmenu a.current:hover div.wp-menu-image::before, #adminmenu a.wp-has-current-submenu:hover div.wp-menu-image::before, #adminmenu li.wp-has-current-submenu a:focus div.wp-menu-image::before, #adminmenu li.wp-has-current-submenu.opensub div.wp-menu-image::before, #adminmenu li.wp-has-current-submenu:hover div.wp-menu-image::before {
+    color: #d64e21 !important;
+}
+#adminmenu {
+    background-color: rgba(0,0,0,.1) !important;
 }

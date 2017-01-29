@@ -9,18 +9,7 @@ wp_enqueue_script('els-js', '/wp-content/plugins/elearningSolutions/els.js', '1.
 wp_enqueue_style('els-css', '/wp-content/plugins/elearningSolutions/els.css', '1.0', true);
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 require_once(ABSPATH . 'wp-content/plugins/elearningSolutions/frontend-functions.php');
-// if(isset($_POST['meta_id'])){
-//   echo 'sent';
-//   exit();
-// }
 
-
-// $postVar = isset($_POST['complete']) ? $_POST['complete'] : NULL;
-// function test(){
-// if($postVar == 'complete'){
-//   var_dump('test');
-//     }
-//  }
 if(isset($_POST['admin_menu_form'])){
   //$connection = new msqli('localhost','otkinsey','komet1','elearningSolutions');
   $firstName  = isset($_POST['els_first_name']) ? $_POST['els_first_name']  : '';
@@ -29,14 +18,11 @@ if(isset($_POST['admin_menu_form'])){
   $testName   = isset($_POST['els_test_name'])  ? $_POST['els_test_name'] : '';
   $password   = isset($_POST['els_password'])  ? $_POST['els_password'] : '';
   $username   = isset($_POST['els_username'])  ? $_POST['els_username'] : '';
-  //var_dump($wpdb);
+
   if( $firstName != '' && $lastName != '' && $testDate != '' && $testName != '' ){
     $wpdb->insert('e_els_scheduledExams', array('firstName'=>"$firstName", 'lastName'=>"$lastName", 'userName'=>"$username", 'password'=>"$password", 'examDate'=>"$testDate", 'score'=>NULL, 'testName'=>"$testName"));
-    // $wpdb->insert('e_els_scheduledExams', array('firstName'=>'', 'lastName'=>"$testName", 'meta_key'=>'els_last_name', 'meta_value'=>$lastName));
-    // $wpdb->insert('e_els_scheduledExams', array('firstName'=>'', 'lastName'=>"$testName", 'meta_key'=>'els_test_date', 'meta_value'=>$testDate));
-    // $wpdb->insert('e_els_scheduledExams', array('firstName'=>'', 'lastName'=>"$testName", 'meta_key'=>'els_test_name', 'meta_value'=>$testName));
-    //echo $wpdb->insert_id;
-    header('Location: http://localhost:8888/practice/elearningSolutions/wp-admin/admin.php?page=scheduled_exams');
+
+    header('Location: http://localhost:8888/practice/elearningsolutions/wp-admin/admin.php?page=scheduled_exams');
   }
   else{
     header('Location: http://localhost:8888/practice/elearningSolutions/wp-admin/admin.php?page=scheduled_exams&error=true');
@@ -46,7 +32,7 @@ if(isset($_POST['admin_menu_form'])){
 else{
     add_action('admin_menu', 'add_scheduled_exam_menu');
     function add_scheduled_exam_menu(){
-      add_menu_page('Scheduled Exam', 'Scheduled Exams', 'manage_options', 'scheduled_exams', 'output_scheduled_exams','',6);
+      add_menu_page('Scheduled Exam', 'Scheduled Exams', 'manage_options', 'scheduled_exams', 'output_scheduled_exams','',1);
     }
 /*******************************************************************************
 * FRONT END FUNCTIONS
@@ -136,8 +122,6 @@ function get_multiple_choice_answers($post_id){
   }
 }
 
-
-
 /*******************************************************************************
 * SELECT FUNCTIONS
 *
@@ -197,15 +181,9 @@ function delete_presentation_slide($postId, $slideNumber){
   return $query;
 }
 /*******************************************************************************
-*
 *  ADMIN OUTPUT FUNCTIONS
-*
 *******************************************************************************/
-/*
-h = function() {
-  window.wpActiveEditor = j
-}
-*/
+
 add_meta_box('exam-object-editor', 'Add Slide to Presentation', 'add_presentation_slide', 'presentation', 'normal', 'high');
 function add_presentation_slide(){
   global $post;
@@ -272,10 +250,10 @@ function add_presentation_slide(){
   deleteNode.setAttribute("onclick","removeSlide(event)");
   deleteId = visibleSlides.length;
   console.log('[admin-functions] line-244 slideElements: '+slideElements.length);
-  // $(document).ready(function(){
+
     var insideContainer = document.querySelector('#wpcf-group-presentation-slides');
     var deleteNodeVar=0;
-    //console.log(insideContainer);
+
     for( var l=0;l<slideCount;l++){
       var numArray = ['one','two','three','four','five','six','seven','eight','nine','ten'];
 
@@ -287,17 +265,10 @@ function add_presentation_slide(){
     newSlideNode.innerHTML = 'add slide';
     newSlideNode.setAttribute("onclick","addNewSlide(event)");
     newSlideId = sc+1;
-    // insideContainer.innerHTML += "<div class='button new-slide' onclick='addNewSlide(event)' id='slide-"+(sc+1)+"' order='"+sc+"'> new slide</div>";
     newSlideNode.id = newSlideId;
     deleteNode.id = deleteId;
     insideContainer.appendChild(newSlideNode);
     insideContainer.appendChild(deleteNode);
-
-  // });
-  // for(var k=0;k<audioInput.length;k++){
-  //     audioInput[k].addEventListener('change', function(event){ populateAudioField(event); }, false);
-  //     console.log(audioInput[k]);
-  // }
 }
   function removeSlide(event){
     var slideId = event.target.id;
@@ -307,18 +278,10 @@ function add_presentation_slide(){
 
     $(visibleSlides[slideId-1]).animate({opacity:0}, 500);
     $(audioFileSelectors[slideId-1]).animate({opacity:0}, 500);
-    // setTimeout(function(){ $(visibleSlides[slideId-1]).removeClass('show');$(audioFileSelectors[slideId-1]).removeClass('show'); }, 600);
     console.log('[admin-function] line-311 slideId: '+visibleSlides[(slideId-1)].className);
     setTimeout(function(){ visibleSlides[(slideId-1)].setAttribute('style','display:none !important;'); audioFileSelectors[(slideId-1)].setAttribute('style','display:none !important;') }, 600);
 
-    // $.ajax({
-    //   method:'post',
-    //   url:'../wp-content/plugins/elearningSolutions/ajax.php',
-    //   data:{'function':'removeSlide','postId':'<?php echo $post->ID; ?>','slideNumber':slideId },
-    //   success: function(data){
-    //     console.log('[removeSlide] response is: '+data);
-    //   }
-    // });
+
     deleteId--;
     slideCount -= 1;
     console.log('[admin-functions] removeSlide() slideCount: '+deleteId);
@@ -360,18 +323,6 @@ function add_presentation_slide(){
     }
 
     function addNewSlide(event){
-      // var slideCount = document.getElementsByClassName('visible-slide').length;
-      // var slides = document.getElementsByClassName('slide');
-      // var slideIndex = ['one','two','three','four','five','six','seven','eight','nine','ten'];
-      // var slideId = event.target.getAttribute('id');
-      // slideOrder = event.target.getAttribute('order');
-      // slideOrder++;
-      // var slideContainer = document.querySelector('#exam-object-editor');
-      // nextSlide = slideCount;
-      // console.log(nextSlide);
-      // slides[slideCount].className += ' visible-slide';
-      //
-      // nextSlide++;
       slideElements[(slideCount)].setAttribute('style','display:block !important;');
       audioFileSelectors[(slideCount)].setAttribute('style','display:block !important;');
       slideCount++;
@@ -381,9 +332,8 @@ function add_presentation_slide(){
       console.log('[admin-functions] addNewSlide() deleteId is '+deleteId);
     }
   </script>
-  <?
-  // $presentationSlideIndex++;
-  // return $presentationSlideIndex;
+  <?php
+
 }
 
 
@@ -394,31 +344,17 @@ function multiple_choice_options(){
   global $post;
   $custom = get_post_custom($post->ID);
   $questions = get_exam_questions($post->ID);
-  // var_dump($custom);
   if(!$questions){
-    # **** DEFAULT OUT PUT FOR ANSWER OPTIONS : REVISIT ******
 
-    // echo "<h3>Question 1 Options</h3>";
-    // $options=4;
-    // for($o=1;$o<$options;$o++){
-      ?>
-      <!-- <label for="option-<? echo $o; ?>">option <? echo $o;?></label> -->
-      <!-- <input meta-id="" class="multipleChoiceOption" placeholder="option <? echo $o; ?>" type="text" id="<? echo $post->ID; ?>" name="question-1-option-<? echo $o; ?>"> --><?
-    //}
-    ?>
-    <!-- <label for="question-1-answer">Answer:</label><input meta-id="" id="<? echo $post->ID; ?>" class="multipleChoiceAnswer" type="text" name="question-1-answer" > -->
-    <?
   }
   else{
     $q=1; $r =0; $a= 0;
     $options=get_multiple_choice_options($post->ID);
     $answers= get_multiple_choice_answers($post->ID);
 
-    // var_dump($options);
     foreach($questions as $item){
       ?><h3 class="q-<? echo $q; ?>">Question <? echo $q; ?> Options</h3><?
       for($o=1;$o<4;$o++){
-        // varr_dump($options[$a]->meta_value);
         ?>
 
         <label for="option-<? echo $o; ?>">Option <? echo $o; ?>:</label>
@@ -460,7 +396,6 @@ function exam_questions(){
     }
     else{
 
-      // var_dump($item);
   ?>
   <div class="questionContainer">
   <? foreach($questions as $item){ /*var_dump($item);*/?>
@@ -599,25 +534,14 @@ function exam_questions(){
           if(n<nVar){
             var newElement = document.getElementById('input_'+nVar);
             var newLabel = document.getElementById('label_'+nVar);
-            // newElement.setAttribute('id') = 'input_'+nVar-1;
-            // newLabel.setAttribute('id') = 'label_'+nVar-1;
-            // newElement.setAttribute('class') = 'examQuestion input-'+nVar-1;
-            // newLabel.setAttribute('class') = 'item-'+nVar-1;
-            // return n--;
+
           }
-          // location.reload();
           console.log(n);
           return n--;
         }
       });
     }
-    /* Add exam question into db via ajax - revisit */
-    // function sendExamQuestions(){
-    //   var examQuestions = document.getElementsByClassName('.examQuestion');
-    //   for(var a=0;a<examQuestions.length;a++){
-    //     var question_
-    //   }
-    // }
+
   </script>
   <!-- end: frontend scripts -->
   <?
@@ -627,10 +551,9 @@ function exam_questions(){
       global $wpdb;
       $str = 'SELECT post_title, ID FROM e_posts WHERE post_type="exam-object"';
       $exam_options = $wpdb->get_results($str, ARRAY_A);
-      // var_dump($exam_options);
     ?>
 
-  <h1>Schedule a New Assessment</h1>
+  <h1><i class="fa fa-calendar-check-o"></i> Schedule a New Assessment</h1>
     <form class="scheduled_exams" action='' method="post">
     <!--form class="scheduled_exams" action='<? echo site_url('/wp-content/plugins/elearningSolutions/admin-functions.php'); ?>' method="post"-->
       <input class='firstName' name='els_first_name'  type="text" placeholder='first name'>
@@ -650,7 +573,7 @@ function exam_questions(){
       <button class='button'>submit</button>
     </form>
     <hr>
-    <h1>Scheduled Assessments</h1>
+    <h2>Manage Your Assessments</h2>
       <div class="large-12 scheduled_exams">
         <div class="columns heading checkbox_column"><i class="fa fa-times "></i></div>
         <div class="large-1 columns heading">First Name</div>
@@ -661,12 +584,9 @@ function exam_questions(){
         <div class="large-1 columns heading">Test Name</div>
         <div class="large-1 columns heading">Score</div>
       </div>
-      <!-- <div class="large-12 columns scheduled_exams"> -->
 
     <?
-      // $ids = get_els_post_ids();
-      // var_dump($ids);
-    // foreach( $ids as $id){
+
          $firstNames = get_els_exam_firstNames();
         //  var_dump($firstNames);
         if($firstNames){
@@ -686,8 +606,6 @@ function exam_questions(){
              <div class="large-1 columns admin_data info_<? echo $item->examID; ?>" examID='<? echo $item->examID; ?>' columnName='score' onclick='updateScheduledExams(event)'><? echo $item->score; ?></div>
          </div>
          <? } ?>
-      <!-- </div> -->
-    <!-- </div> -->
     <script>
     var $ = jQuery.noConflict();
     var elementContent;
@@ -794,7 +712,6 @@ function els_submenu() {
 }
 /*****************************************************************************
 * Plugin Initialization Functions
-*
 ******************************************************************************/
 
   /* Description: Create Tables for scheduled examas */
@@ -929,6 +846,35 @@ function admin_styles(){
   <?
 }
 add_action('admin_enqueue_scripts', 'admin_styles');
+
+/*******************************************************************************
+* Remove Unwanted items from admin menu
+*******************************************************************************/
+function new_admin_homepage(){
+  wp_redirect(admin_url('admin.php?page=scheduled_exams','http',301));
+  exit;
+}
+add_action('wp_login','new_admin_homepage', 10, 2);
+/*******************************************************************************
+* Remove Unwanted items from admin menu
+*******************************************************************************/
+function remove_admin_menu_items() {
+  remove_menu_page('users.php');
+  remove_menu_page('plugins.php');
+  remove_menu_page('edit.php');
+  remove_menu_page('edit.php?post_type=page');
+  remove_menu_page( 'edit-comments.php' );
+  remove_menu_page( 'tools.php' );
+  remove_menu_page( 'themes.php' );
+  remove_menu_page( 'options-general.php' );
+  remove_menu_page( 'index.php');
+}
+
+add_action('admin_menu', 'remove_admin_menu_items');
+function remove_toolset(){
+  //remove_menu_page( 'wpcf-cpt');
+}
+add_action('admin_init','remove_toolset');
 /*******************************************************************************
 * end of plugin
 *******************************************************************************/

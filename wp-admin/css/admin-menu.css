@@ -523,7 +523,7 @@ ul#adminmenu > li.current > a.current:after {
 	color: #fff;
 	font-size: 9px;
 	line-height: 17px;
-	font-weight: 600;
+	font-weight: 200;
 	margin: 1px 0 0 2px;
 	vertical-align: top;
 	-webkit-border-radius: 10px;
