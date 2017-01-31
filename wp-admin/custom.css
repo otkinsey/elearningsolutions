@@ -88,7 +88,7 @@ ol ol, ol ul, ul ol, ul ul {
 	height: 42px;
 	display: block;
 }
-.delete.button,.button-primary, .scheduled_exams button, .page-title-action, .scheduled_exams .button, #addQuestion {
+.delete.button, .button-primary, .scheduled_exams button, .page-title-action, .scheduled_exams .button, .js-wpt-file-upload, #addQuestion {
 	height: 30px !important;
 	display: inline-block !important;
 	padding: 0px 8px !important;
@@ -99,8 +99,8 @@ ol ol, ol ul, ul ol, ul ul {
 	transition: background .25s ease !important;
 	text-shadow: none !important;
 	border: none !important;
-	min-width: 50px !important;
-	margin:10px;
+	min-width: 100px !important;
+	margin: 10px;
 }
 .wp-core-ui
 .scheduled_exams input, .scheduled_exams select {
@@ -168,14 +168,22 @@ ol ol, ol ul, ul ol, ul ul {
 #adminmenu .wp-submenu{
 	padding: 0;
 }
+.wpt-file .textfield, .wpt-image .textfield, .wpt-audio .textfield, .wpt-video .textfield {
+	width: 70%;
+	display: inline;
+	height: 30px;
+	margin-right: 10px;
+	font-size: .8rem;
+	padding: 0 10px;
+}
 .wp-core-ui .button-primary, .wp-core-ui .toolset-message-after-activate .button-primary, #poststuff .wpcf-fields-add-new {
 	/*background-color: #3b9675 !important;*/
 	/*border-color: #3b9675;*/
 	/*border: none !important;
-	-webkit-box-shadow: none;
+	-webkit-box-shadow: none;*/
 	box-shadow: none;
 	text-shadow: none;
-	font-weight: bold;
+	/*font-weight: bold;
 	color: #fff !important;*/
 }
 #comment-link-box, #edit-slug-box {

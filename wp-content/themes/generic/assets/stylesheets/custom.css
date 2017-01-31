@@ -5,7 +5,6 @@ body {
 	margin: 0;
 	line-height: 1.5;
 	color: #0a0a0a;
-	background: #000;
 	-webkit-font-smoothing: antialiased;
 }
 body, h1, h2, h3, h4, h5, h6 {
@@ -30,6 +29,9 @@ footer .logo_text {
 h3 {
 	font-size: 36px;
 	text-transform: capitalize;
+}
+section {
+	position:relative;
 }
 section h3 {
 	text-align: left;
@@ -76,7 +78,10 @@ ul {
 	right: -10%;
 	opacity: 1;
 }
-
+.error-container {
+	background:white;
+	margin:40px auto 700px;
+}
 audio{
 	display:none;
 }
@@ -330,6 +335,8 @@ audio{
 	margin: 60px auto 0;
 	border-top: 1px solid rgba(255,255,255,.3);
 	border-left: rgba(255,255,255,.07) 1px solid;
+	z-index: 99;
+	position: relative;
 }
 .sign-in-form {
 	position: relative;
@@ -400,10 +407,12 @@ audio{
 		color: #85cfb4;
 }
 .overflow_container {
-	display: inline-block;
-	width: 100%;
+	display: block;
+	width: 70%;
 	overflow: hidden;
 	min-height: 700px;
+	margin: auto;
+	position: relative;
 }
 .section_two {
   color: #fff;
@@ -474,9 +483,20 @@ audio{
 .section_4 .large-6 img{
   display: block;
 }
-.section_5 .animateBox_1, .section_5 .animateBox_2 {
-	width: 880px;
-	display: block;
+.section_5 .animateBox_1, .section_5 .presentation_container {
+    width: 100%;
+    display: block;
+    background: rgba(0,0,0,0);
+    height: 500px;
+    opacity: 1;
+    z-index: 1;
+    position: relative;
+		transition: height 1.5s ease;
+}
+.section_5 .animateBox_1, .section_5 .presentation_container.moved {
+	height: calc(100% - 40px);
+	background: rgba(0,0,0,0.6);
+	border-bottom: 1px solid rgba(0,0,0,.8);
 }
 .section_5 .animateBox_1 {
 	float: left;
@@ -502,7 +522,7 @@ audio{
 	position: relative;
 	overflow: visible;
 	width: 100%;
-	max-width: 880px;
+	max-width: 100%;
 	top: 32px;
 }
 .section_5 .wa_image img {
@@ -694,14 +714,25 @@ video {
 	position: relative;
 	width: 100%;
 }
-.wa_image .controls_container {
+.controls_row {
+	border-top: 1px solid rgba(255,255,255,.2);
+	border-bottom: 2px solid rgba(0,0,0,.3);
+	position: relative;
+	height: auto;
+	padding: 4px 0;
+	opacity: .0001;
+}
+.controls_row.moved {
+	opacity: 1;
+}
+.controls_container {
 	right: 0;
-	position: absolute;
+	position: relative;
 	bottom: 0;
 	/* border: 1px solid #ccc; */
 	height: 50px;
-	top: 600px;
-	z-index: 9;
+	/* top: 0; */
+	z-index: 999;
 	opacity: .001;
 	transition: opacity 1s ease;
 	width: 197px;
@@ -717,10 +748,10 @@ video {
 	/*transition: color .25s ease;*/
 	cursor: pointer;
 }
-/*.control.go-to-test:hover {
-	color:#f69542;
-}*/
-.wa_image .controls_container.moved {
+.slide_image{
+	margin-top:20px;
+}
+.controls_container.moved {
 	opacity:1;
 }
 .wa_image .video_container {

@@ -103,33 +103,29 @@ if($function == 'multipleChoiceOptions'){
     global $wpdb;
       $options = $_POST['options'];
       $answers = $_POST['answers'];
-      //  $valueTest = get_multiple_choice_options($options[0]['meta_value']);
-      //  if(!$valueTest){
-      //    logger('[File Name: AJAX.PHP] function: multipleChoiceOptions - Meta_value is not set.  No query run...exiting');
-      //  }
-          for( $o=0;$o<count($options);$o++){
-            $test1 = get_multiple_choice_options($options[$o]['post_id'])[$o]->meta_id;
-            if(!$test1){
-              $query = $wpdb->insert('e_postmeta',array('meta_id'=>'NULL','post_id'=>$options[$o]['post_id'],'meta_key'=>$options[$o]['meta_key'],'meta_value'=>$options[$o]['meta_value']));
-              logger("OPTION VARIABLES: query_type : INSERT | meta_id : ". $options[$o]['meta_id'] ." | post_id : ".$options[$o]['post_id']." | meta_key: ".$options[$o]['meta_key']." | meta_value: ".$options[$o]['meta_value']." | TEST-VALUE: ".$test1);
-            }
-            else{
-              $query = $wpdb->update('e_postmeta',array('meta_id'=>$options[$o]['meta_id'],'post_id'=>$options[$o]['post_id'],'meta_key'=>$options[$o]['meta_key'],'meta_value'=>$options[$o]['meta_value']), array('meta_id'=>$options[$o]['meta_id']));
-              logger("OPTION VARIABLES: query_type : UPDATE | meta_id : ". $options[$o]['meta_id'] ." | post_id : ".$options[$o]['post_id']." | meta_key: ".$options[$o]['meta_key']." | meta_value: ".$options[$o]['meta_value']." | TEST-VALUE: ".$test1);
-            }
-          }
+    for( $o=0;$o<count($options);$o++){
+      $test1 = get_multiple_choice_options($options[$o]['post_id'])[$o]->meta_id;
+      if(!$test1){
+        $query = $wpdb->insert('e_postmeta',array('meta_id'=>'NULL','post_id'=>$options[$o]['post_id'],'meta_key'=>$options[$o]['meta_key'],'meta_value'=>$options[$o]['meta_value']));
+        logger("OPTION VARIABLES: query_type : INSERT | meta_id : ". $options[$o]['meta_id'] ." | post_id : ".$options[$o]['post_id']." | meta_key: ".$options[$o]['meta_key']." | meta_value: ".$options[$o]['meta_value']." | TEST-VALUE: ".$test1);
+      }
+      else{
+        $query = $wpdb->update('e_postmeta',array('meta_id'=>$options[$o]['meta_id'],'post_id'=>$options[$o]['post_id'],'meta_key'=>$options[$o]['meta_key'],'meta_value'=>$options[$o]['meta_value']), array('meta_id'=>$options[$o]['meta_id']));
+        logger("OPTION VARIABLES: query_type : UPDATE | meta_id : ". $options[$o]['meta_id'] ." | post_id : ".$options[$o]['post_id']." | meta_key: ".$options[$o]['meta_key']." | meta_value: ".$options[$o]['meta_value']." | TEST-VALUE: ".$test1);
+      }
+    }
 
-          for( $a=0;$a<count($answers);$a++){
-            $test2 = get_multiple_choice_answers($answers[$a]['post_id'])[$a]->meta_id;
-            if(!$test2){
-              $query = $wpdb->insert('e_postmeta',array('meta_id'=>'NULL','post_id'=>$answers[$a]['post_id'],'meta_key'=>$answers[$a]['meta_key'],'meta_value'=>$answers[$a]['meta_value']));
-              logger("ANSWER VARIABLES: query_type : INSERT | meta_id : ". $answers[$a]['meta_id'] ." | post_id : ".$answers[$a]['post_id']." | meta_key: ".$answers[$a]['meta_key']." | meta_value: ".$answers[$a]['meta_value']." | TEST-VALUE: ".$test2);
-            }
-            else{
-              $query = $wpdb->update('e_postmeta',array('meta_id'=>$answers[$a]['meta_id'],'post_id'=>$answers[$a]['post_id'],'meta_key'=>$answers[$a]['meta_key'],'meta_value'=>$answers[$a]['meta_value']), array('meta_id'=>$answers[$a]['meta_id']));
-              logger("ANSWER VARIABLES: query_type : UPDATE | meta_id : ". $answers[$a]['meta_id'] ." | post_id : ".$answers[$a]['post_id']." | meta_key: ".$answers[$a]['meta_key']." | meta_value: ".$answers[$a]['meta_value']." | TEST-VALUE: ".$test2);
-            }
-          }
+    for( $a=0;$a<count($answers);$a++){
+      $test2 = get_multiple_choice_answers($answers[$a]['post_id'])[$a]->meta_id;
+      if(!$test2){
+        $query = $wpdb->insert('e_postmeta',array('meta_id'=>'NULL','post_id'=>$answers[$a]['post_id'],'meta_key'=>$answers[$a]['meta_key'],'meta_value'=>$answers[$a]['meta_value']));
+        logger("ANSWER VARIABLES: query_type : INSERT | meta_id : ". $answers[$a]['meta_id'] ." | post_id : ".$answers[$a]['post_id']." | meta_key: ".$answers[$a]['meta_key']." | meta_value: ".$answers[$a]['meta_value']." | TEST-VALUE: ".$test2);
+      }
+      else{
+        $query = $wpdb->update('e_postmeta',array('meta_id'=>$answers[$a]['meta_id'],'post_id'=>$answers[$a]['post_id'],'meta_key'=>$answers[$a]['meta_key'],'meta_value'=>$answers[$a]['meta_value']), array('meta_id'=>$answers[$a]['meta_id']));
+        logger("ANSWER VARIABLES: query_type : UPDATE | meta_id : ". $answers[$a]['meta_id'] ." | post_id : ".$answers[$a]['post_id']." | meta_key: ".$answers[$a]['meta_key']." | meta_value: ".$answers[$a]['meta_value']." | TEST-VALUE: ".$test2);
+      }
+    }
 
       die();
   }
@@ -171,16 +167,10 @@ if($function == 'sign-in'){
         echo 'username and password must be provided.';
         exit();
     }
-
     $signed_in = scheduled_exam_signin($username, $password);
-
-
     if(!$signed_in || $signed_in == '' || $signed_in == NULL){
         echo 'request failed..';
     }else{
-          //  $_POST['response'] = "{\"examID\":\"".$signed_in[0]->examID."\",\"firstName\":\"".$signed_in[0]->firstName."\",\"lastName\":\"".$signed_in[0]->examID."\",\"username\":\"".$signed_in[0]->userName."\",\"examDate\":\"".$signed_in[0]->examDate."\",\"score\":\"NULL".$signed_in[0]->score."\",\"testName\":\"".$signed_in[0]->testName."\" }";
-          // echo $signed_in;
-
           $examName       = get_exam_name($signed_in[0]->testName);
           $examNameArray  = explode('-', $examName[0]->post_name);
           $presVar        = get_presentation($examNameArray[1]);
@@ -208,7 +198,6 @@ if($function == 'sign-in'){
           foreach($test as $obj){
             $questions[]= $obj;
           }
-
           foreach($presentation as $slide){
             $slides[] = $slide;
           }
@@ -220,9 +209,7 @@ if($function == 'sign-in'){
                               'slides'=>$slides,
                               'audioFiles'=>$files
                             );
-
           echo json_encode($dataObj);
-          // echo 'presention ID:  '.$presVar[0]->ID;
           die();
       }
     }

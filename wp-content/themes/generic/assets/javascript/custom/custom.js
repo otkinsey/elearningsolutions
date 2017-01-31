@@ -250,6 +250,7 @@ function testInit(){
               }
               // console.log( 'function name: advanceTextClick() - line 189: index = '+index);
               index+=1;
+              console.log(index);
               return index;
           }
       }
@@ -432,10 +433,25 @@ function signin(event){
         var questionContainer = document.querySelector('.questions');
         var answerOptions = response.options;
         var answers = response.answers;
-        var a = 1, b=0,c=1;
+        var varMap = {1:'one',2:'two',3:"three",4:"four",5:"five",6:"six",7:"seven",8:"eight",9:"nine",10:"ten"};
+        var imageVar=1;
+        var slideVar =1;
+        var audioVar=1;
+        var a = 1, b=0,c=1,d=1;
         // console.log(answerOptions.length);
+        /********************************
+        * resize video player *
+        *********************************/
+        var controls_row = document.querySelector('.controls_row');
+        var video_container = document.querySelector('.presentation_container');
 
-        /** html output for audio files **/
+        video_container.className += ' moved';
+        controls_row.className += ' moved';
+        video_container.style.height = (window.innerHeight-24)+'px';
+
+        /********************************
+        * html output for audio files *
+        *********************************/
         response.audioFiles.forEach(function(element){
           var audioFileUrl = element.meta_value;
           console.log('custom.js line 418: '+element.meta_value);
@@ -443,10 +459,24 @@ function signin(event){
           var audioFileContainer = document.getElementById('audioFileContainer');
           setAttributes(audioTag, {'src':audioFileUrl, 'class':'audio_'+a, 'autoplay':'false'});
           // audioTag.appendChild(audioFileUrl);
-          audioFileContainer.appendChild(audioTag);
+          for(var audioLoop=0;audioLoop<response.audioFiles.length;audioLoop++){
+            if(response.audioFiles[audioLoop].meta_key == "wpcf-slide-audio-file-"+varMap[a]){
+              setAttributes(audioTag, {'src':response.audioFiles[audioLoop].meta_value})
+              audioFileContainer.appendChild(audioTag);
+            }
+          }
+          audioVar++;
+          console.log(a);
           a++;
         });
-        /** html out for presentation slides and test questions **/
+
+        /******************************************************
+        * HTML output for presentation slides and test questions *
+        **********************************************************/
+
+        /*------------------------
+        * Test questions
+        ------------------------*/
         response.questions.forEach(function(element){
           var d=1;
           var questionContent = document.createTextNode(element.meta_value);
@@ -465,14 +495,12 @@ function signin(event){
               setAttributes(optionContainer, {'value':'t', 'class':'option question'+c,'id':'o'+d});
               questionContainer.appendChild(optionContainer);
               d++;
-              //console.log('custom.js line 359: question-'+c+'-option-'+d);
             }
             else if(el.meta_key == 'question-'+c+'-option-'+d){
               optionContainer.appendChild(optionContent);
               setAttributes(optionContainer, {'value':'f', 'class':'option question'+c,'id':'o'+d});
               questionContainer.appendChild(optionContainer);
               d++;
-              //console.log('custom.js line 359: question-'+c+'-option-'+d);
             }
             else{
               return true;
@@ -480,15 +508,32 @@ function signin(event){
           });
           c++;
         });
+
+        /*------------------------
+        * Presentation slides
+        ------------------------*/
+
         response.slides.forEach(function(element){
           var parser = new DOMParser();
           var parsedContent = parser.parseFromString(element.meta_value, "text/html");
           var newDiv = document.createElement('div');
+          var newImage = document.createElement('img');
+          var slidesArray = response.slides;
+
           var container = document.querySelector('.presentation_text');
-          setAttributes(newDiv, {'class':'textItem', 'id':'slide-'+a});
+
+          setAttributes(newDiv, {'class':'textItem', 'id':'slide-'+slideVar});
           newDiv.appendChild(parsedContent.firstChild);
-          container.appendChild(newDiv);
-          a++;b++;
+
+          for( var slideLoop=1;slideLoop<slidesArray.length;slideLoop++){
+            if( element.meta_key == "wpcf-slide-"+varMap[slideLoop] ){
+              setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
+              newDiv.appendChild(newImage);
+              container.appendChild(newDiv);
+            }
+          }
+
+          slideVar++;imageVar++;
         });
         testInit();
         pauseAll();

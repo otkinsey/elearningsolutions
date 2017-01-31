@@ -36,7 +36,6 @@ else{
     }
 /*******************************************************************************
 * FRONT END FUNCTIONS
-*
 *******************************************************************************/
 function scheduled_exam_signin($username, $password){
   global $wpdb;
@@ -230,6 +229,7 @@ function add_presentation_slide(){
   slideTextEditor = document.getElementsByClassName('wp-editor-area');
   slideCount = slideArrayJSON.length;
   slideElements = document.getElementsByClassName('js-wpt-wysiwyg');
+  slideImages = document.getElementsByClassName('wpt-image');
   visibleSlides = document.getElementsByClassName('js-wpt-wysiwyg show');
   audioFileSelectors = document.getElementsByClassName('wpt-file');
   slide = document.getElementsByClassName('js-wpt-wysiwyg');
@@ -241,6 +241,7 @@ function add_presentation_slide(){
     }
     else{
       slideElements[l].className += ' show';
+      slideImages[l].className += ' show';
       audioFileSelectors[l].className += ' show';
     }
   }
@@ -324,6 +325,7 @@ function add_presentation_slide(){
 
     function addNewSlide(event){
       slideElements[(slideCount)].setAttribute('style','display:block !important;');
+      slideImages[(slideCount)].setAttribute('style','display:block !important;');
       audioFileSelectors[(slideCount)].setAttribute('style','display:block !important;');
       slideCount++;
       deleteId++;
