@@ -15,6 +15,8 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 	// Enqueue the main Stylesheet.
 	wp_enqueue_style( 'main-stylesheet', get_template_directory_uri() . '/assets/stylesheets/foundation.css', array(), '2.6.1', 'all' );
 	wp_enqueue_style( 'custom-stylesheet', get_template_directory_uri() . '/assets/stylesheets/custom.css', array(), '2.6.1', 'all' );
+	// wp_enqueue_style( 'jscroll-stylesheet', get_template_directory_uri() . '/assets/javascript/jScroll/style/jquery.jscrollpane.css', array(), '', 'all' );
+	wp_enqueue_style( 'malihu-stylesheet', get_template_directory_uri() . '/assets/javascript/malihu/jquery.mCustomScrollbar.css', array(), '', 'all' );
 	// wp_enqueue_style( 'wow-stylesheet', get_template_directory_uri() . '/assets/javascript/custom/WOW/css/libs/animate.css', array(), '2.6.1', 'all' );
 	// Deregister the jquery version bundled with WordPress.
 	wp_deregister_script( 'jquery' );
@@ -25,6 +27,8 @@ if ( ! function_exists( 'foundationpress_scripts' ) ) :
 	// It's a good idea to do this, performance-wise. No need to load everything if you're just going to use the grid anyway, you know :)
 	wp_enqueue_script( 'foundation', get_template_directory_uri() . '/assets/javascript/foundation.js', array('jquery'), '2.6.1', true );
 	wp_enqueue_script( 'custom', get_template_directory_uri() . '/assets/javascript/custom/custom.js', array('jquery'), '2.6.1', true );
+	// wp_enqueue_script( 'scroll', get_template_directory_uri() . '/assets/javascript/jScroll/script/jquery.jscrollpane.js', array('jquery'), '2.6.1', true );
+	wp_enqueue_script( 'malihu', get_template_directory_uri() . '/assets/javascript/malihu/jquery.mCustomScrollbar.js', array('jquery'), '2.6.1', true );
 	// wp_enqueue_script('offscreen', get_template_directory_uri() . '/assets/javascript/custom/offCanvas.js' , array('jquery'), '2.6.1', true);
 	// wp_enqueue_script('wow', get_template_directory_uri() . '/assets/javascript/custom/WOW/dist/wow.js', array('jquery'), '2.6.1', false);
 	// Add the comment-reply library on pages where it is necessary

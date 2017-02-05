@@ -1,6 +1,10 @@
 /*********************************
 * BEGIN: NAVIGATION STYLES
 **********************************/
+/******************/
+
+/*****************/
+
 body {
 	margin: 0;
 	line-height: 1.5;
@@ -28,7 +32,17 @@ footer .logo_text {
 }
 h3 {
 	font-size: 36px;
-	text-transform: capitalize;
+	text-transform: none;
+}
+hr {
+	box-sizing: content-box;
+	max-width: 75rem;
+	height: 0;
+	border-right: 0;
+	border-top: 0;
+	border-top: 1px solid #eee;
+	border-left: 0;
+	margin: 30px auto;
 }
 section {
 	position:relative;
@@ -36,7 +50,7 @@ section {
 section h3 {
 	text-align: left;
 	font-weight: normal;
-	color: #3B9675;
+	color: #030303;
 	line-height: 0px;
 	margin: 8px 0 20px 0px;
 	font-family: 'lato';
@@ -138,19 +152,9 @@ audio{
 .button {
 	z-index:20;
 }
-/*.close {
-	position: absolute;
-	top: 42px;
-	right: 11px;
-	background: #000;
-	height: 29px;
-	width: 56px;
-	border-radius: 0;
-	overflow: hidden;
-}*/
 .fwd {
 	position: absolute;
-	bottom: 14px;
+	top: 0;
 	right: 0;
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/fwd_inactive.gif') no-repeat center/106%;
 	height: 32px;
@@ -159,6 +163,7 @@ audio{
 	overflow: hidden;
 	box-shadow: 0;
 	transition: box-shadow 600ms ease;
+	border: 1px solid #85cfb4;
 }
 .fwd:hover {
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/fwd.gif') no-repeat center/106%;
@@ -217,6 +222,11 @@ audio{
 	box-shadow: none;
 	transition: box-shadow .5s, border-color .25s ease-in-out;
 }
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	background-color: rgba(119, 222, 186, 0.8) !important;
+	filter: "alpha(opacity=75)";
+	-ms-filter: "alpha(opacity=75)";
+}
 .logo{
 	padding: 0;
 	color:;
@@ -255,7 +265,7 @@ audio{
 }
 .pause {
 	position: absolute;
-	bottom: 7px;
+	top: 0;
 	left: 0;
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/pause_inactive.gif') no-repeat center/108%;
 	height: 39px;
@@ -266,6 +276,7 @@ audio{
 	right: 0;
 	margin: auto;
 	display: inline;
+	border: 1px solid #85cfb4;
 }
 .pause:hover {
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/pause.gif') no-repeat center/108%;
@@ -275,9 +286,9 @@ audio{
 }
 .play {
 	position: absolute;
-	bottom: 7px;
+	top: 0;
 	left: 0;
-	background:  url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play_grey.png') no-repeat 14px 10px/45%, #000  ;
+	background: url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play_grey.png') no-repeat 14px 10px/45%, #000;
 	height: 39px;
 	width: 39px;
 	border-radius: 50%;
@@ -285,13 +296,15 @@ audio{
 	right: 0;
 	margin: auto;
 	display: none;
+	border: 1px solid #85cfb4;
 }
 .play:hover {
 	background:  url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play.png') no-repeat 14px 10px/45%, #000;
 }
 .presentation_text {
-	height: 100%;
-	position:relative;
+	height: 1000px;
+	position: relative;
+	width: 998px;
 }
 .presentation_text .textItem body {
 	color: #fff;
@@ -301,7 +314,7 @@ audio{
 	position: absolute;
 	right: -100%;
 	font-family: 'lato';
-	font-size: 20px;
+	font-size: 16px;
 	display: block;
 	color: #fff;
 	text-align: left;
@@ -310,13 +323,29 @@ audio{
 	text-transform: none;
 	transition: right 1s ease;
 	/* background: rgba(0,0,0,.5); */
-	padding: 20px;
+	padding: 0 20px;
 	background: transparent !important;
 }
 .presentation_text .textItem#t8,
 .presentation_text .textItem#t10 {
 	margin-top:120px;
 	font-size:140px;
+}
+.presentation_container {
+ width: 100%;
+ display: block;
+ background: rgba(0,0,0,0);
+ height: 490px;
+ opacity: 1;
+ z-index: 1;
+ position: relative;
+ transition: height 1.5s ease;
+}
+.presentation_container.moved {
+	height: calc(100% - 60px);
+	background: rgba(0,0,0,0.6);
+	border-bottom: 1px solid rgba(0,0,0,.8);
+	padding: 70px 0 0 0;
 }
 .presentation_text .textItem.moved {
 	right: 0;
@@ -327,21 +356,20 @@ audio{
 	right: 100%;
 }
 .signIn {
-	max-width: 560px;
+	max-width: 400px;
 	background: #ffffff;
 	padding: 30px;
 	border-radius: 4px;
-	/* box-shadow: 0 2px 12px 0 rgba(0,0,0,.6); */
+	box-shadow: 0 2px 12px 0 rgba(255,255,255,1);
 	margin: 60px auto 0;
-	border-top: 1px solid rgba(255,255,255,.3);
-	border-left: rgba(255,255,255,.07) 1px solid;
+	border: 1px solid rgba(0,0,0,.1);
 	z-index: 99;
 	position: relative;
 }
 .sign-in-form {
 	position: relative;
 	z-index: 999;
-	width: 90% !important;
+	width: 100% !important;
 	margin: auto;
 }
 .sign-in-form h3 {
@@ -351,7 +379,7 @@ audio{
 .sign-in-form div {
 	margin: 22px auto 31px;
 	display: block;
-	color: #F15A2E;
+	color: #060606;
 }
 .signIn form {
 	width: 400px;
@@ -364,10 +392,9 @@ audio{
 	width: 100%;
 	height: 3rem;
 }
-
 .textItem h1, .signIn-text h1, .video_container h1 {
 	font-family: 'impact';
-	font-size: 37px;
+	font-size: 28px;
 	display: block;
 	color: white;
 	text-align: left;
@@ -378,7 +405,7 @@ audio{
 }
 .textItem body h1 {
 	position: relative;
-	margin: 40px 0 20px;
+	margin: 0px 0 8px;
 	font-family: lato;
 	width: 100% !important;
 }
@@ -388,13 +415,14 @@ audio{
 }
 .rwd {
 	position: absolute;
-	bottom: 13px;
+	top: 0;
 	left: 0;
 	background: url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/rwd_inactive.gif') no-repeat center/106%;
 	height: 32px;
 	width: 32px;
 	border-radius: 50%;
 	overflow: hidden;
+	border: 1px solid #85cfb4;
 }
 .rwd:hover {
 	background: #000 url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/06/rwd.gif') no-repeat center/106%;
@@ -406,14 +434,43 @@ audio{
 .orange-text {
 		color: #85cfb4;
 }
+
 .overflow_container {
-	display: block;
+	display: none;
 	width: 70%;
 	overflow: hidden;
-	min-height: 700px;
+	height: 650px;
 	margin: auto;
 	position: relative;
 }
+input[type="range"]::-moz-range-thumb {
+	-moz-appearance: none;
+	background: black !important;
+	width: 1.4rem;
+	height: 8px !important;
+	margin-top: -.45rem;
+}
+.overflow_container input[type="range"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	display: block;
+	width: 600px;
+	height: auto;
+	cursor: pointer;
+	margin-top: .45rem;
+	margin-bottom: .45rem;
+	border: 0;
+	line-height: 1;
+	position: absolute;
+	top: 29%;
+	opacity: .3;
+	transform: rotate(90deg);
+	left: 69%;
+}
+.overflow_container::-webkit-scrollbar {
+	width:10px;
+}
+
 .section_two {
   color: #fff;
   text-align: center;
@@ -483,21 +540,7 @@ audio{
 .section_4 .large-6 img{
   display: block;
 }
-.section_5 .animateBox_1, .section_5 .presentation_container {
-    width: 100%;
-    display: block;
-    background: rgba(0,0,0,0);
-    height: 500px;
-    opacity: 1;
-    z-index: 1;
-    position: relative;
-		transition: height 1.5s ease;
-}
-.section_5 .animateBox_1, .section_5 .presentation_container.moved {
-	height: calc(100% - 40px);
-	background: rgba(0,0,0,0.6);
-	border-bottom: 1px solid rgba(0,0,0,.8);
-}
+
 .section_5 .animateBox_1 {
 	float: left;
 	position: absolute;
@@ -675,19 +718,34 @@ section{
 video {
 	position: absolute;
 	width: auto;
-	height: 100%;
-	opacity: .6;
+	height: 1000px;
+	opacity: .0001;
 	z-index: 0;
 	top: 0;
+	display: block;
+	transition: opacity 1s ease;
+}
+video.visible {
+	/*display: block;*/
+	opacity: .6;
+}
+.video_container {
+	min-height: auto;
+	height: auto;
+	position: relative;
+	padding: 0;
+}
+.video_border div {
+	padding: 0px;
 }
 .video_border {
-	/* height: 361px; */
+	height: auto;
 	/* overflow: hidden; */
 	top: 0px;
-	position: absolute;
+	position: relative;
 	width: 100%;
 	margin: auto;
-	padding-top: 2rem;
+	padding-top: 0;
 }
 .wa_image .video_container {
 	width: 700px;
@@ -716,11 +774,12 @@ video {
 }
 .controls_row {
 	border-top: 1px solid rgba(255,255,255,.2);
-	border-bottom: 2px solid rgba(0,0,0,.3);
+	border-bottom: 1px solid rgba(0,0,0,.3);
 	position: relative;
 	height: auto;
-	padding: 4px 0;
+	padding: 20px 0;
 	opacity: .0001;
+	background: rgba(0,0,0,.75);
 }
 .controls_row.moved {
 	opacity: 1;
@@ -729,9 +788,7 @@ video {
 	right: 0;
 	position: relative;
 	bottom: 0;
-	/* border: 1px solid #ccc; */
-	height: 50px;
-	/* top: 0; */
+	height: 40px;
 	z-index: 999;
 	opacity: .001;
 	transition: opacity 1s ease;
@@ -953,16 +1010,19 @@ video {
 	overflow: hidden;
 	border-radius: 4px;
 }
-
 #section_four {
 	background-image: linear-gradient(45deg, #142332 -9%, #2f5c8a 44%, #6aadf3 99%);
 }
 #section_five {
-	background: rgba(0,0,0,.5);
 	position: relative;
 	overflow: hidden;
-	/* min-height: 100%; */
-	height: 1072px;
+	height: auto;
+}
+#section_five hr::after {
+	content: "";
+	display: block;
+	background: linear-gradient(to right,#fff,rgba(255,255,255,0),#fff), linear-gradient(#eee 0%, white 5%, #ddd);
+	height: 186px;
 }
 @media screen and (max-width: 1400px) {
 	.fwd {
@@ -1218,12 +1278,12 @@ input, textarea {
 	padding: .85em 1em;
 	margin: 1rem 0 1rem;
 	font-size: .9rem;
-	background-color: #3b9675;
+	background-color: #85cfb4;
 	color: #fff !important;
 	min-width: 6rem;
 }
 .button:focus, .button:hover {
-	background-color: #5ebf9b;
+	background-color: #fe7952;
 	color: #fff;
 }
 @media screen and (max-width: 650px){

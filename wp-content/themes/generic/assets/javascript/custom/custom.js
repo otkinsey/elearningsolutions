@@ -413,7 +413,8 @@ function signin(event){
 
   var username = document.querySelector('#username').value;
   var password  = document.querySelector('#password').value;
-  //var response;
+  var overflow_container = document.querySelector('.overflow_container');
+
   $.ajax({
     method:'POST',
     url: 'wp-content/plugins/elearningSolutions/ajax.php',
@@ -424,12 +425,27 @@ function signin(event){
         exit();
       }
       response = JSON.parse(data1);
-      // response = data1;
-      // response.username == username
       console.log(response);
+
+      $('.signIn').fadeOut('300ms');
+      setTimeout( function(){ $('.signIn').remove(); }, 400);
+      $('hr').hide();
+      $('#section_five').attr('style', "height:1000px;");
       if(response){
-        $('.signIn').fadeOut('700ms');
-        setTimeout(function(){ $('.signIn').remove(); advanceTextClick(); animateControls(); }, 800);
+        setTimeout( function(){
+          $('section.container').attr('style', "background:#777;");
+        var video = document.querySelector('video');
+        //video.style.display = "block";
+        video.className += ' visible';
+
+
+        setTimeout(function(){
+            $('.signIn').remove();
+            overflow_container.style.display = "block";
+            setTimeout(function(){
+              advanceTextClick();
+              animateControls(); }, 500);
+            }, 2600);
         var questionContainer = document.querySelector('.questions');
         var answerOptions = response.options;
         var answers = response.answers;
@@ -438,16 +454,20 @@ function signin(event){
         var slideVar =1;
         var audioVar=1;
         var a = 1, b=0,c=1,d=1;
-        // console.log(answerOptions.length);
+
         /********************************
         * resize video player *
         *********************************/
         var controls_row = document.querySelector('.controls_row');
         var video_container = document.querySelector('.presentation_container');
+        var video = document.querySelector('video');
 
-        video_container.className += ' moved';
-        controls_row.className += ' moved';
-        video_container.style.height = (window.innerHeight-24)+'px';
+        video_container.style.height = 0;
+        setTimeout(function(){
+          video_container.className += ' moved';
+          controls_row.className += ' moved';
+          video_container.style.height = (window.innerHeight-44)+'px';
+        }, 1000);
 
         /********************************
         * html output for audio files *
@@ -458,7 +478,6 @@ function signin(event){
           var audioTag = document.createElement('audio');
           var audioFileContainer = document.getElementById('audioFileContainer');
           setAttributes(audioTag, {'src':audioFileUrl, 'class':'audio_'+a, 'autoplay':'false'});
-          // audioTag.appendChild(audioFileUrl);
           for(var audioLoop=0;audioLoop<response.audioFiles.length;audioLoop++){
             if(response.audioFiles[audioLoop].meta_key == "wpcf-slide-audio-file-"+varMap[a]){
               setAttributes(audioTag, {'src':response.audioFiles[audioLoop].meta_value})
@@ -466,7 +485,6 @@ function signin(event){
             }
           }
           audioVar++;
-          console.log(a);
           a++;
         });
 
@@ -513,13 +531,15 @@ function signin(event){
         * Presentation slides
         ------------------------*/
 
-        response.slides.forEach(function(element){
+        // response.slides.forEach(function(element){
+        for( var z=0;z<response.slides.length;z++){
           var parser = new DOMParser();
+          var element = response.slides[z];
           var parsedContent = parser.parseFromString(element.meta_value, "text/html");
           var newDiv = document.createElement('div');
           var newImage = document.createElement('img');
           var slidesArray = response.slides;
-
+          console.log('diagnosis test');
           var container = document.querySelector('.presentation_text');
 
           setAttributes(newDiv, {'class':'textItem', 'id':'slide-'+slideVar});
@@ -533,10 +553,12 @@ function signin(event){
             }
           }
 
-          slideVar++;imageVar++;
-        });
+          slideVar+=1;
+          imageVar+=1;
+        };
         testInit();
         pauseAll();
+        }, 700);
       }
       else{
         alert('No response. There was a database error');

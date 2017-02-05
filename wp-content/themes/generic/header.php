@@ -12,7 +12,6 @@
 <!doctype html>
 <html class="no-js" <?php language_attributes(); ?> >
 	<head>
-
 		<meta charset="<?php bloginfo( 'charset' ); ?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<?php wp_head(); ?>
@@ -27,7 +26,13 @@
 	<?php endif; ?>
 
 	<?php do_action( 'foundationpress_layout_start' ); ?>
-
+<script>
+	(function($){
+		$(window).on("load", function(){
+			$('.overflow_container').mCustomScrollbar({theme : "light"});
+		});
+	})(jQuery);
+</script>
 	<script>
 	new WOW().init();
 	</script>
