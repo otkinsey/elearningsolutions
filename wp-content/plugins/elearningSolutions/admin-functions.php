@@ -194,13 +194,11 @@ function add_presentation_slide(){
 
   foreach($numberOfSlides as $key=>$value){
     $displayTheseSlides[] = substr( $value->meta_key ,strrpos($value->meta_key, '-')+1);
-
   }
-  var_dump($displayTheseSlides);
+  // var_dump($displayTheseSlides);
   $b=0;
   $af=1;
   echo "<div id='slideCount'>"./*count($numberOfSlides)*/json_encode($displayTheseSlides)."</div>";
-
   ?>
   <script>
   /* GLOBAL VARIABLES */
@@ -260,16 +258,17 @@ function add_presentation_slide(){
 
       deleteNodeVar++;
     }
-    console.log('[admin-functions.php] inside document.ready slideCount is: '+slideCount)
+    console.log('[admin-functions.php] inside document.ready slideCount is: '+slideCount);
     newSlideNode = document.createElement('div');
     newSlideNode.className = 'delete button';
     newSlideNode.innerHTML = 'add slide';
     newSlideNode.setAttribute("onclick","addNewSlide(event)");
-    newSlideId = sc+1;
+    newSlideId = (Math.floor(slideCount/2))+1;
     newSlideNode.id = newSlideId;
     deleteNode.id = deleteId;
     insideContainer.appendChild(newSlideNode);
     insideContainer.appendChild(deleteNode);
+
 }
   function removeSlide(event){
     var slideId = event.target.id;
@@ -277,15 +276,20 @@ function add_presentation_slide(){
     var targetSlide = document.querySelector("[data-wpt-id=wpcf-slide-"+slideId+"]");
     var targetAudioFile = document.querySelector("[data-wpt-id=wpcf-slide-audio-file-"+slideId+"]");
 
-    $(visibleSlides[slideId-1]).animate({opacity:0}, 500);
-    $(audioFileSelectors[slideId-1]).animate({opacity:0}, 500);
-    console.log('[admin-function] line-311 slideId: '+visibleSlides[(slideId-1)].className);
-    setTimeout(function(){ visibleSlides[(slideId-1)].setAttribute('style','display:none !important;'); audioFileSelectors[(slideId-1)].setAttribute('style','display:none !important;') }, 600);
+    $(slideElements[(slideId)-1]).animate({opacity:0}, 500);
+      $(slideImages[(slideId)-1]).animate({opacity:0}, 500);
+        $(audioFileSelectors[(slideId)-1]).animate({opacity:0}, 500);
+    console.log('[admin-function] line-311 slideId: '+slideId);
+    setTimeout(function(){
+      $(slideElements[(slideId)-1]).val('').attr('style','display:none');
+        $(slideImages[(slideId)-1]).val('').attr('style','display:none');
+          $(audioFileSelectors[(slideId)-1]).val('').attr('style','display:none');
+     }, 600);
 
-
-    deleteId--;
+    deleteId-=1;
     slideCount -= 1;
     console.log('[admin-functions] removeSlide() slideCount: '+deleteId);
+    newSlideNode.id = parseInt(slideId);
     deleteNode.id = deleteId;
     //newSlideNode.id = sc;
   }
@@ -324,12 +328,15 @@ function add_presentation_slide(){
     }
 
     function addNewSlide(event){
-      slideElements[(slideCount)].setAttribute('style','display:block !important;');
-      slideImages[(slideCount)].setAttribute('style','display:block !important;');
-      audioFileSelectors[(slideCount)].setAttribute('style','display:block !important;');
-      slideCount++;
+      var newSlide = parseInt(event.target.id);
+      console.log('newSlide =  '+newSlide);
+      slideElements[(newSlide)-1].setAttribute('style','display:block !important;');
+      slideImages[(newSlide)-1].setAttribute('style','display:block !important;');
+      audioFileSelectors[(newSlide)-1].setAttribute('style','display:block !important;');
+      newSlide+=1;
       deleteId++;
-      deleteNode.id = deleteId;
+      newSlideNode.id = newSlide;
+      deleteNode.id = newSlide-1;
       console.log('[admin-functions] addNewSlide() slide count is '+slideCount);
       console.log('[admin-functions] addNewSlide() deleteId is '+deleteId);
     }
@@ -870,6 +877,7 @@ function remove_admin_menu_items() {
   remove_menu_page( 'themes.php' );
   remove_menu_page( 'options-general.php' );
   remove_menu_page( 'index.php');
+  remove_menu_page( 'edit.php?post_type=company-logo');
 }
 
 add_action('admin_menu', 'remove_admin_menu_items');

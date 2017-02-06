@@ -302,7 +302,7 @@ audio{
 	background:  url('http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/12/play.png') no-repeat 14px 10px/45%, #000;
 }
 .presentation_text {
-	height: 1000px;
+	height: 1500px;
 	position: relative;
 	width: 998px;
 }
@@ -403,11 +403,24 @@ audio{
 	text-transform: capitalize;
 	margin-bottom: 20px;
 }
+.textItem h2{
+	font-size: 24px;
+}
 .textItem body h1 {
 	position: relative;
 	margin: 0px 0 8px;
 	font-family: lato;
 	width: 100% !important;
+	border-bottom: 1px solid rgba(255,255,255,.4);
+	color: rgba(246, 144, 114,1);
+}
+.questions {
+	height: 500px;
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	float: left;
 }
 .video_container h1 {
 	width: 560px !important;
@@ -439,7 +452,7 @@ audio{
 	display: none;
 	width: 70%;
 	overflow: hidden;
-	height: 650px;
+	height: 580px;
 	margin: auto;
 	position: relative;
 }
@@ -776,7 +789,7 @@ video.visible {
 	border-top: 1px solid rgba(255,255,255,.2);
 	border-bottom: 1px solid rgba(0,0,0,.3);
 	position: relative;
-	height: auto;
+	height: 80px;
 	padding: 20px 0;
 	opacity: .0001;
 	background: rgba(0,0,0,.75);
@@ -805,8 +818,12 @@ video.visible {
 	/*transition: color .25s ease;*/
 	cursor: pointer;
 }
-.slide_image{
-	margin-top:20px;
+.slide_image {
+	margin-top: 20px;
+	background: white;
+	padding: 1%;
+	width: 98%;
+	display: block;
 }
 .controls_container.moved {
 	opacity:1;
@@ -1017,6 +1034,7 @@ video.visible {
 	position: relative;
 	overflow: hidden;
 	height: auto;
+	transition: height	500ms ease;
 }
 #section_five hr::after {
 	content: "";
