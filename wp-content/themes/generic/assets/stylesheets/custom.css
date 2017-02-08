@@ -335,14 +335,14 @@ audio{
  width: 100%;
  display: block;
  background: rgba(0,0,0,0);
- height: 490px;
+ min-height: 490px;
  opacity: 1;
  z-index: 1;
  position: relative;
- transition: height 1.5s ease;
+ transition: min-height 500ms ease;
 }
 .presentation_container.moved {
-	height: calc(100% - 60px);
+	min-height: calc(100% - 60px);
 	background: rgba(0,0,0,0.6);
 	border-bottom: 1px solid rgba(0,0,0,.8);
 	padding: 70px 0 0 0;
@@ -736,7 +736,7 @@ video {
 	z-index: 0;
 	top: 0;
 	display: block;
-	transition: opacity 1s ease;
+	transition: opacity 1.5s ease;
 }
 video.visible {
 	/*display: block;*/
@@ -1033,8 +1033,8 @@ video.visible {
 #section_five {
 	position: relative;
 	overflow: hidden;
-	height: auto;
-	transition: height	500ms ease;
+	min-height: 630px;
+	transition: min-height	1000ms ease;
 }
 #section_five hr::after {
 	content: "";

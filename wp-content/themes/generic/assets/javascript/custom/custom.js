@@ -1,4 +1,4 @@
-/**************************************************
+  /**************************************************
 *  GLOBAL VARIABLES
 ***************************************************/
 
@@ -428,14 +428,19 @@ function signin(event){
       console.log(response);
 
       $('.signIn').fadeOut('300ms');
-      setTimeout( function(){ $('.signIn').remove(); }, 400);
-      $('hr').hide();
-      $('#section_five').attr('style', "height:1000px;");
+      setTimeout(
+        function(){ $('.signIn').remove();
+        $('hr').hide();
+        $('#section_five').attr('style', "min-height:1000px;");
+
+        setTimeout( function(){ $('html, body').animate({'scrollTop':'100px'}, 300); }, 200);
+      }, 400);
+
       if(response){
-        setTimeout( function(){
+
+        setTimeout( function(){ /** closed on line 562 **/
           $('section.container').attr('style', "background:#777;");
         var video = document.querySelector('video');
-        //video.style.display = "block";
         video.className += ' visible';
 
 
@@ -444,8 +449,8 @@ function signin(event){
             overflow_container.style.display = "block";
             setTimeout(function(){
               advanceTextClick();
-              animateControls(); }, 500);
-            }, 2600);
+              animateControls(); }, 100);
+            }, 1200);
         var questionContainer = document.querySelector('.questions');
         var answerOptions = response.options;
         var answers = response.answers;
@@ -462,12 +467,12 @@ function signin(event){
         var video_container = document.querySelector('.presentation_container');
         var video = document.querySelector('video');
 
-        video_container.style.height = 0;
+        video_container.style.minHeight = 0;
         setTimeout(function(){
           video_container.className += ' moved';
           controls_row.className += ' moved';
-          video_container.style.height = (window.innerHeight-44)+'px';
-        }, 1000);
+          video_container.style.minHeight = (window.innerHeight-44)+'px';
+        }, 500);
 
         /********************************
         * html output for audio files *
@@ -558,17 +563,18 @@ function signin(event){
         };
         testInit();
         pauseAll();
-        }, 700);
+      }, 1200); /** ref line 437 **/
       }
       else{
         alert('No response. There was a database error');
       }
     },
+
     error:function(){
       response = 'request failed...';
     }
   });
-  $('html, body').animate({'scrollTop':'100px'}, 600);
+  // setTimeout( function(){ $('html, body').animate({'scrollTop':'100px'}, 300); }, 500);
   setTimeout(function(){ highlightAdvance(); }, 24000);
 }
 /********************************
