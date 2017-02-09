@@ -4,7 +4,9 @@
 /******************/
 
 /*****************/
-
+html, body {
+	min-height: 100%;
+}
 body {
 	margin: 0;
 	line-height: 1.5;
@@ -74,6 +76,39 @@ ul {
 	opacity: .1;
 	transition: opacity 1s ease, right 1500ms ease;
 }
+.controls_row {
+	border-top: 1px solid rgba(255,255,255,.2);
+	border-bottom: 1px solid rgba(0,0,0,.3);
+	position: relative;
+	height: 80px;
+	padding: 20px 0;
+	opacity: .0001;
+	background: rgba(0,0,0,.75);
+}
+.controls_row.moved {
+	opacity: 1;
+}
+.controls_container {
+	right: 0;
+	position: relative;
+	bottom: 0;
+	height: 40px;
+	z-index: 999;
+	opacity: .001;
+	transition: opacity 1s ease;
+	width: 197px;
+	left: 0;
+	margin: auto;
+	color: white;
+}
+.control.go-to-test {
+	right: -45px;
+	position: absolute;
+	font-size: 18px;
+	color: white;
+	/*transition: color .25s ease;*/
+	cursor: pointer;
+}
 #wpadminbar {
 	direction: ltr;
 	color: #ccc;
@@ -121,7 +156,7 @@ audio{
 	margin-top: 0px;
 	/* padding-top: 64px; */
 	padding-bottom: 0;
-	/* min-height: 1072px; */
+	min-height: 80% !important;
 	position: relative;
 }
 .dark_background #return{
@@ -273,9 +308,9 @@ audio{
 	border-radius: 50%;
 	overflow: hidden;
 	background-position-y: -1px;
-	right: 0;
+	right: 0px;
 	margin: auto;
-	display: inline;
+	background-position-x: -2px;
 	border: 1px solid #85cfb4;
 }
 .pause:hover {
@@ -345,7 +380,7 @@ audio{
 	min-height: calc(100% - 60px);
 	background: rgba(0,0,0,0.6);
 	border-bottom: 1px solid rgba(0,0,0,.8);
-	padding: 70px 0 0 0;
+	padding: 3% 0 0 0;
 }
 .presentation_text .textItem.moved {
 	right: 0;
@@ -455,6 +490,7 @@ audio{
 	height: 580px;
 	margin: auto;
 	position: relative;
+	max-width: 1010px;
 }
 input[type="range"]::-moz-range-thumb {
 	-moz-appearance: none;
@@ -730,11 +766,10 @@ section{
 }
 video {
 	position: absolute;
-	width: auto;
-	height: 1000px;
+	height: 100%;
 	opacity: .0001;
 	z-index: 0;
-	top: 0;
+	top: 0px;
 	display: block;
 	transition: opacity 1.5s ease;
 }
@@ -785,39 +820,7 @@ video.visible {
 	position: relative;
 	width: 100%;
 }
-.controls_row {
-	border-top: 1px solid rgba(255,255,255,.2);
-	border-bottom: 1px solid rgba(0,0,0,.3);
-	position: relative;
-	height: 80px;
-	padding: 20px 0;
-	opacity: .0001;
-	background: rgba(0,0,0,.75);
-}
-.controls_row.moved {
-	opacity: 1;
-}
-.controls_container {
-	right: 0;
-	position: relative;
-	bottom: 0;
-	height: 40px;
-	z-index: 999;
-	opacity: .001;
-	transition: opacity 1s ease;
-	width: 197px;
-	left: 0;
-	margin: auto;
-	color: white;
-}
-.control.go-to-test {
-	right: -45px;
-	position: absolute;
-	font-size: 18px;
-	color: white;
-	/*transition: color .25s ease;*/
-	cursor: pointer;
-}
+
 .slide_image {
 	margin-top: 20px;
 	background: white;

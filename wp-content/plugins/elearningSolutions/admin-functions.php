@@ -869,7 +869,7 @@ add_action('wp_login','new_admin_homepage', 10, 2);
 *******************************************************************************/
 function remove_admin_menu_items() {
   remove_menu_page('users.php');
-  remove_menu_page('plugins.php');
+  // remove_menu_page('plugins.php');
   remove_menu_page('edit.php');
   //remove_menu_page('edit.php?post_type=page');
   remove_menu_page( 'edit-comments.php' );

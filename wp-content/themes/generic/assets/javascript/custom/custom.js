@@ -234,17 +234,20 @@ function testInit(){
               else{
                 animateOut(index-1);
                 animateIn(index);
-                console.log( 'function name: advanceTextClick() - function #5 = '+index);
+                // console.log( 'function name: advanceTextClick() - function #5 = '+index);
               }
 
               rwd.setAttribute('style' , 'display:inline');
 
-              console.log('[advanceTextClick] index is: '+index);
-              console.log('[advanceTextClick] audioFile is: '+audio[index].src);
+              // console.log('[advanceTextClick] index is: '+index);
+              // console.log('[advanceTextClick] audioFile is: '+audio[index].src);
               pauseAll();
               // playAudio();
-              audio[index].load();
-              audio[index].play();
+              if(audio[index] ){
+                audio[index].load();
+                audio[index].play();
+              }
+
               if(play.style.display == 'inline'){
                 controlToggle();
               }
@@ -326,9 +329,11 @@ function testInit(){
 * 13. Highlight functions
 *********************************/
         function highlightPlay(){
+          $('.highlight').removeClass('highlight');
           $(play).addClass('highlight');
         }
         function highlightAdvance(){
+          $('.highlight').removeClass('highlight');
           $(advance).addClass('highlight');
         }
 /********************************
@@ -368,8 +373,11 @@ function testInit(){
             console.log(event);
             var audio = document.querySelector('.audio_'+index);
             // var audio = document.querySelector('.audio');
-            audio.pause();
-            console.log(audio);
+            if(audio){
+              audio.pause();
+              console.log(audio);
+            }
+            else return;
           }
 
 /********************************
@@ -427,28 +435,29 @@ function signin(event){
       response = JSON.parse(data1);
       console.log(response);
 
-      $('.signIn').fadeOut('300ms');
+      $('.signIn, header.site-header').animate({ 'opacity':'.0001'}, '300ms');
       setTimeout(
-        function(){ $('.signIn').remove();
+        function(){
         $('hr').hide();
-        $('#section_five').attr('style', "min-height:1000px;");
+        $('#section_five').attr('style', "min-height:1061px;");
 
-        setTimeout( function(){ $('html, body').animate({'scrollTop':'100px'}, 300); }, 200);
+        // setTimeout( function(){ $('html, body').animate({'scrollTop':'100px'}, 300); }, 200);
       }, 400);
-
+      setTimeout( function(){ $('.signIn, header.site-header').remove(); }, 1200);
       if(response){
 
-        setTimeout( function(){ /** closed on line 562 **/
-          $('section.container').attr('style', "background:#777;");
+      setTimeout( function(){ /** closed on line 562 **/
+        $('section.container').attr('style', "background:#777;");
         var video = document.querySelector('video');
         video.className += ' visible';
 
 
         setTimeout(function(){
-            $('.signIn').remove();
+            // $('.signIn').remove();
             overflow_container.style.display = "block";
             setTimeout(function(){
               advanceTextClick();
+              // highlightPlay();
               animateControls(); }, 100);
             }, 1200);
         var questionContainer = document.querySelector('.questions');
@@ -471,7 +480,7 @@ function signin(event){
         setTimeout(function(){
           video_container.className += ' moved';
           controls_row.className += ' moved';
-          video_container.style.minHeight = (window.innerHeight-44)+'px';
+          video_container.style.minHeight = (window.innerHeight-80)+'px';
         }, 500);
 
         /********************************
@@ -538,28 +547,45 @@ function signin(event){
 
         // response.slides.forEach(function(element){
         for( var z=0;z<response.slides.length;z++){
+          console.log('[custom.js line 544] - processing slide index '+ z);
           var parser = new DOMParser();
           var element = response.slides[z];
           var parsedContent = parser.parseFromString(element.meta_value, "text/html");
           var newDiv = document.createElement('div');
           var newImage = document.createElement('img');
           var slidesArray = response.slides;
-          console.log('diagnosis test');
           var container = document.querySelector('.presentation_text');
 
           setAttributes(newDiv, {'class':'textItem', 'id':'slide-'+slideVar});
           newDiv.appendChild(parsedContent.firstChild);
 
           for( var slideLoop=1;slideLoop<slidesArray.length;slideLoop++){
-            if( element.meta_key == "wpcf-slide-"+varMap[slideLoop] ){
-              setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
-              newDiv.appendChild(newImage);
-              container.appendChild(newDiv);
+            console.log('[custom.js line 557] - adding image #'+imageVar);
+            if(response.slides[z]){
+              if( element.meta_key == "wpcf-slide-"+varMap[slideLoop] ){
+                console.log('[custom.js line 564] - image '+varMap[slideLoop]+' selected...');
+                if(response.slides[imageVar]){
+                  setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
+                  newDiv.appendChild(newImage);
+                  container.appendChild(newDiv);
+                  console.log('[custom.js line 564] - image #'+varMap[slideLoop]+' added...');
+                  console.log('[custom.js line 564] - slide #'+varMap[slideLoop]+' added...');
+                }
+                else{
+                  console.log('[custom.js line 566] - image file #'+imageVar+' not defined...continuing loop');
+                  container.appendChild(newDiv);
+                }
+              }
+
+            }
+            else {
+              console.log('[custom.js line 566] - slide '+z+' not defined...breaking loop');
+              break
             }
           }
-
-          slideVar+=1;
           imageVar+=1;
+          slideVar+=1;
+
         };
         testInit();
         pauseAll();

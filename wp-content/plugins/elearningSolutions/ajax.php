@@ -199,7 +199,9 @@ if($function == 'sign-in'){
             $questions[]= $obj;
           }
           foreach($presentation as $slide){
-            $slides[] = $slide;
+            if($slide){
+              $slides[] = $slide;
+            }
           }
 
           $dataObj =  array(  'userInfo'=>$signed_in,

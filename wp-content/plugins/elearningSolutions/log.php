@@ -753,3 +753,31 @@ OPTION VARIABLES: query_type : UPDATE | meta_id : 1791 | post_id : 268 | meta_ke
 ANSWER VARIABLES: query_type : UPDATE | meta_id : 1792 | post_id : 268 | meta_key: question-1-answer | meta_value: question-1-option-1 | TEST-VALUE: 1792
 ANSWER VARIABLES: query_type : UPDATE | meta_id : 1793 | post_id : 268 | meta_key: question-2-answer | meta_value: question-2-option-3 | TEST-VALUE: 1793
 ANSWER VARIABLES: query_type : UPDATE | meta_id : 1794 | post_id : 268 | meta_key: question-3-answer | meta_value: question-3-option-3 | TEST-VALUE: 1794
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1783 | post_id : 268 | meta_key: question-1-option-1 | meta_value: A. A employee sponsored health benefit | TEST-VALUE: 1783
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1784 | post_id : 268 | meta_key: question-1-option-2 | meta_value: B. A Medicare benefit for home health care | TEST-VALUE: 1784
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1785 | post_id : 268 | meta_key: question-1-option-3 | meta_value: C. A prescription drug program | TEST-VALUE: 1785
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1786 | post_id : 268 | meta_key: question-2-option-1 | meta_value: A. this | TEST-VALUE: 1786
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1787 | post_id : 268 | meta_key: question-2-option-2 | meta_value: B. that | TEST-VALUE: 1787
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1788 | post_id : 268 | meta_key: question-2-option-3 | meta_value: C. the third | TEST-VALUE: 1788
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1789 | post_id : 268 | meta_key: question-3-option-1 | meta_value: A.  this | TEST-VALUE: 1789
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1790 | post_id : 268 | meta_key: question-3-option-2 | meta_value: B.  that | TEST-VALUE: 1790
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1791 | post_id : 268 | meta_key: question-3-option-3 | meta_value: C.  the third | TEST-VALUE: 1791
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1792 | post_id : 268 | meta_key: question-1-answer | meta_value: question-1-option-2 | TEST-VALUE: 1792
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1793 | post_id : 268 | meta_key: question-2-answer | meta_value: question-2-option-3 | TEST-VALUE: 1793
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1794 | post_id : 268 | meta_key: question-3-answer | meta_value: question-3-option-3 | TEST-VALUE: 1794
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1783 | post_id : 268 | meta_key: question-1-option-1 | meta_value: A. A employee sponsored health benefit | TEST-VALUE: 1783
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1784 | post_id : 268 | meta_key: question-1-option-2 | meta_value: B. A Medicare benefit for home health care | TEST-VALUE: 1784
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1785 | post_id : 268 | meta_key: question-1-option-3 | meta_value: C. A prescription drug program | TEST-VALUE: 1785
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1786 | post_id : 268 | meta_key: question-2-option-1 | meta_value: A. Are an american citizen | TEST-VALUE: 1786
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1787 | post_id : 268 | meta_key: question-2-option-2 | meta_value: B. Have high blood pressure | TEST-VALUE: 1787
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1788 | post_id : 268 | meta_key: question-2-option-3 | meta_value: C. In need of intermittent skilled nursing care | TEST-VALUE: 1788
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1789 | post_id : 268 | meta_key: question-3-option-1 | meta_value: A.  If your employer says so | TEST-VALUE: 1789
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1790 | post_id : 268 | meta_key: question-3-option-2 | meta_value: B.  If you need skilled nursing care on <emph>more</emph> than a intermittent basis | TEST-VALUE: 1790
+OPTION VARIABLES: query_type : UPDATE | meta_id : 1791 | post_id : 268 | meta_key: question-3-option-3 | meta_value: C.  If you are over 75 years old | TEST-VALUE: 1791
+OPTION VARIABLES: query_type : INSERT | meta_id :  | post_id : 268 | meta_key: question-4-option-1 | meta_value: A. They are quick, easy, and painless. | TEST-VALUE: 
+OPTION VARIABLES: query_type : INSERT | meta_id :  | post_id : 268 | meta_key: question-4-option-2 | meta_value: B. They are lighter, quicker, cheaper | TEST-VALUE: 
+OPTION VARIABLES: query_type : INSERT | meta_id :  | post_id : 268 | meta_key: question-4-option-3 | meta_value: C. They are less expensive, just as effective, and more convenient | TEST-VALUE: 
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1792 | post_id : 268 | meta_key: question-1-answer | meta_value: question-1-option-2 | TEST-VALUE: 1792
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1793 | post_id : 268 | meta_key: question-2-answer | meta_value: question-2-option-3 | TEST-VALUE: 1793
+ANSWER VARIABLES: query_type : UPDATE | meta_id : 1794 | post_id : 268 | meta_key: question-3-answer | meta_value: question-3-option-2 | TEST-VALUE: 1794
+ANSWER VARIABLES: query_type : INSERT | meta_id :  | post_id : 268 | meta_key: question-4-answer | meta_value: question-4-option-3 | TEST-VALUE: 
