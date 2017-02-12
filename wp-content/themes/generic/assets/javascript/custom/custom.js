@@ -435,31 +435,32 @@ function signin(event){
       response = JSON.parse(data1);
       console.log(response);
 
-      $('.signIn, header.site-header').animate({ 'opacity':'.0001'}, '300ms');
+      $('.signIn, header.site-header, hr').animate({ 'opacity':'.0001'}, '300ms');
       setTimeout(
         function(){
-        $('hr').hide();
+        //$('hr').hide();
         $('#section_five').attr('style', "min-height:1061px;");
 
         // setTimeout( function(){ $('html, body').animate({'scrollTop':'100px'}, 300); }, 200);
       }, 400);
-      setTimeout( function(){ $('.signIn, header.site-header').remove(); }, 1200);
+      setTimeout( function(){ $('.signIn, header.site-header, hr').remove();}, 900);
+      setTimeout( function(){ $('.presentation_container h1').attr('style','display:block'); $('.presentation_container h1').animate({'opacity':'1'}, 300); },2100);
       if(response){
-
+      window.addEventListener('resize', resizePresentationArea );
+      setTimeout(insertLogoAfterSlideTitle, 1500);
       setTimeout( function(){ /** closed on line 562 **/
         $('section.container').attr('style', "background:#777;");
         var video = document.querySelector('video');
         video.className += ' visible';
 
-
         setTimeout(function(){
             // $('.signIn').remove();
-            overflow_container.style.display = "block";
+            setTimeout( function(){ overflow_container.style.display = "block"; }, 300);
             setTimeout(function(){
-              advanceTextClick();
+              setTimeout(advanceTextClick, 300);
               // highlightPlay();
               animateControls(); }, 100);
-            }, 1200);
+            }, 1500);
         var questionContainer = document.querySelector('.questions');
         var answerOptions = response.options;
         var answers = response.answers;
@@ -481,7 +482,7 @@ function signin(event){
           video_container.className += ' moved';
           controls_row.className += ' moved';
           video_container.style.minHeight = (window.innerHeight-80)+'px';
-        }, 500);
+        }, 700);
 
         /********************************
         * html output for audio files *
@@ -589,7 +590,7 @@ function signin(event){
         };
         testInit();
         pauseAll();
-      }, 1200); /** ref line 437 **/
+      }, 1000); /** ref line 437 **/
       }
       else{
         alert('No response. There was a database error');
@@ -634,4 +635,29 @@ function sendScore(){
       console.log('score successfully added.. the response is '+data);
     }
   });
+}
+
+/********************************
+* 23. Resize presentation area
+----- database.
+*********************************/
+function resizePresentationArea() {
+  var controls_row = document.querySelector('.controls_row');
+  var video_container = document.querySelector('.presentation_container');
+  var video = document.querySelector('video');
+
+  video_container.style.minHeight = 0;
+  setTimeout(function(){
+    video_container.className += ' moved';
+    controls_row.className += ' moved';
+    video_container.style.minHeight = (window.innerHeight-80)+'px';
+  }, 500);
+}
+
+/********************************
+* 24. Add logo after slide title
+*********************************/
+function insertLogoAfterSlideTitle(){
+  console.log('called');
+  $('.textItem h1').prepend('<img src="http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/05/elearningsolutions.png" alt="elearningsolutions" width="200" height="200" class="alignnone size-full wp-image-188" />');
 }

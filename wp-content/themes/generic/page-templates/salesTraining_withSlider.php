@@ -46,6 +46,8 @@ get_header(); ?>
 
 					</div>
 			<hr>
+			<h1><img src="http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/05/elearningsolutions.png" alt="elearningsolutions" class="alignnone size-full wp-image-188" width="200" height="200">Healthcare</h1>
+
 					<div class="overflow_container" style="background: url('')">
 						<div class="video_container columns" >
 							<div class="questions">	</div>
