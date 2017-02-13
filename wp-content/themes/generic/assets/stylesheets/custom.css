@@ -496,7 +496,9 @@ audio{
 .orange-text {
 		color: #85cfb4;
 }
-
+.mCSB_inside > .mCSB_container {
+	margin-right: 18px !important;
+}
 .overflow_container {
 	display: none;
 	width: 70%;
@@ -504,7 +506,7 @@ audio{
 	height: 580px;
 	margin: auto;
 	position: relative;
-	max-width: 1010px;
+	max-width: 1040px;
 }
 input[type="range"]::-moz-range-thumb {
 	-moz-appearance: none;

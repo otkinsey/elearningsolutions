@@ -548,7 +548,7 @@ function signin(event){
 
         // response.slides.forEach(function(element){
         for( var z=0;z<response.slides.length;z++){
-          console.log('[custom.js line 544] - processing slide index '+ z);
+          // console.log('[custom.js line 544] - processing slide index '+ z);
           var parser = new DOMParser();
           var element = response.slides[z];
           var parsedContent = parser.parseFromString(element.meta_value, "text/html");
@@ -561,23 +561,40 @@ function signin(event){
           newDiv.appendChild(parsedContent.firstChild);
 
           for( var slideLoop=1;slideLoop<slidesArray.length;slideLoop++){
-            console.log('[custom.js line 557] - adding image #'+imageVar);
-            if(response.slides[z]){
+            if(element){
+                // console.log('[custom.js line 565] - z is '+z);
               if( element.meta_key == "wpcf-slide-"+varMap[slideLoop] ){
-                console.log('[custom.js line 564] - image '+varMap[slideLoop]+' selected...');
-                if(response.slides[imageVar]){
-                  setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
-                  newDiv.appendChild(newImage);
-                  container.appendChild(newDiv);
-                  console.log('[custom.js line 564] - image #'+varMap[slideLoop]+' added...');
-                  console.log('[custom.js line 564] - slide #'+varMap[slideLoop]+' added...');
+                // console.log('[custom.js line 567] - image '+varMap[slideLoop]+' selected...');
+                // console.log('[custom.js line 568] - imageVar is '+imageVar);
+                if( response.slides[imageVar] ){
+                  // console.log('[custom.js line 570] - slides array is '+response.slides.length);
+                  if(response.slides[imageVar].meta_key == "wpcf-slide-"+varMap[slideLoop]+"-image"){
+                    setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
+                    newDiv.appendChild(newImage);
+                    container.appendChild(newDiv);
+                    // console.log('[custom.js line 574] - image #'+varMap[slideLoop]+' added...');
+                    // console.log('[custom.js line 574] - slide #'+varMap[slideLoop]+' added...');
+                  }
+                  else{
+                    console.log('[custom.js line 566] - image file #'+imageVar+' not defined...continuing loop');
+                    container.appendChild(newDiv);
+                  }
                 }
                 else{
-                  console.log('[custom.js line 566] - image file #'+imageVar+' not defined...continuing loop');
-                  container.appendChild(newDiv);
+                  // console.log('[custom.js line 570] - imageVar is '+varMap[imageVar]+' is defined');
+                  if(response.slides[z].meta_key == "wpcf-slide-"+varMap[slideLoop]+"-image"){
+                    setAttributes(newImage,{'src': response.slides[imageVar].meta_value, 'class':'slide_image'});
+                    newDiv.appendChild(newImage);
+                    container.appendChild(newDiv);
+                    // console.log('[custom.js line 574] - image #'+varMap[slideLoop]+' added...');
+                    // console.log('[custom.js line 574] - slide #'+varMap[slideLoop]+' added...');
+                  }
+                  else{
+                    // console.log('[custom.js line 566] - image file #'+imageVar+' not defined...continuing loop');
+                    container.appendChild(newDiv);
+                  }
                 }
               }
-
             }
             else {
               console.log('[custom.js line 566] - slide '+z+' not defined...breaking loop');
@@ -658,6 +675,5 @@ function resizePresentationArea() {
 * 24. Add logo after slide title
 *********************************/
 function insertLogoAfterSlideTitle(){
-  console.log('called');
   $('.textItem h1').prepend('<img src="http://localhost:8888/practice/elearningsolutions/wp-content/uploads/2016/05/elearningsolutions.png" alt="elearningsolutions" width="200" height="200" class="alignnone size-full wp-image-188" />');
 }

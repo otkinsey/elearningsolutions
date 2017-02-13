@@ -47,18 +47,19 @@ ol ol, ol ul, ul ol, ul ul {
 	border-width: 1px;
 	transition: border-color .25s ease;
 	position: relative;
-	height: 40px;
+	height: auto;
 	margin-bottom: 15px;
 }
 .admin_data.update {
 	border-color: rgba(200,200,200,1);
+	padding: 2px;
 }
 .admin_row {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-top: 9px;
-  height: 40px;
-  border-top: 1px solid #e0e0e0;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	padding-top: 7px;
+	height: 40px;
+	border-top: 1px solid #e0e0e0;
 }
 .column:last-child:not(:first-child), .columns:last-child:not(:first-child) {
     float: left;
@@ -88,7 +89,7 @@ ol ol, ol ul, ul ol, ul ul {
 	height: 42px;
 	display: block;
 }
-.delete.button, .button-primary, .scheduled_exams button, .page-title-action, .scheduled_exams .button, .js-wpt-file-upload, #addQuestion {
+.delete.button, .button-primary, .scheduled_exams button, .page-title-action, .js-wpt-file-upload, #addQuestion {
 	height: 30px !important;
 	display: inline-block !important;
 	padding: 0px 8px !important;
@@ -101,6 +102,9 @@ ol ol, ol ul, ul ol, ul ul {
 	border: none !important;
 	min-width: 100px !important;
 	margin: 10px;
+}
+.scheduled_exams .button {
+	margin: 0px;
 }
 .wp-core-ui
 .scheduled_exams input, .scheduled_exams select {
@@ -134,7 +138,12 @@ ol ol, ol ul, ul ol, ul ul {
 .update-nag {
   display: none !important;
 }
-.updateColumn{ position:absolute;background:white;top:0;left:0; }
+.updateColumn {
+	position: absolute;
+	background: transparent;
+	top: 0;
+	left: 0;
+}
 .updateColumn input {
 	border: 0;
 }
@@ -167,6 +176,9 @@ ol ol, ol ul, ul ol, ul ul {
 }
 #adminmenu .wp-submenu{
 	padding: 0;
+}
+#exam-object-editor, #types-information-table{
+	display:none;
 }
 .wpt-file .textfield, .wpt-image .textfield, .wpt-audio .textfield, .wpt-video .textfield {
 	width: 70%;
@@ -216,6 +228,35 @@ ol ol, ol ul, ul ol, ul ul {
 	-webkit-transform: none;
 	-ms-transform: none;
 	transform: none;
+}
+.wp-core-ui .attachment .thumbnail {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 1;
+	-webkit-transition: opacity .1s;
+	transition: opacity .1s;
+	height: 100%;
+}
+.wp-core-ui .attachment .filename {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	max-height: 100%;
+	word-wrap: normal;
+	text-align: center;
+	font-weight: 700;
+	background: rgba(255,255,255,.8);
+	-webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
+	height: 36px;
+	word-break: break-all;
+	line-height: 1;
 }
 .scheduled_exams .fa-times::before {
 	color: #aaa;
